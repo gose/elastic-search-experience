@@ -1,0 +1,35 @@
+{
+  "FlightNum": "4IKNUM3",
+  "DestCountry": "US",
+  "OriginWeather": "Sunny",
+  "OriginCityName": "Dubai",
+  "AvgTicketPrice": 721.409593947361,
+  "DistanceMiles": 8103.101305520484,
+  "FlightDelay": false,
+  "DestWeather": "Rain",
+  "Dest": "San Francisco International Airport",
+  "FlightDelayType": "No Delay",
+  "OriginCountry": "AE",
+  "dayOfWeek": 3,
+  "DistanceKilometers": 13040.677467431558,
+  "timestamp": "2021-05-27T12:52:56",
+  "DestLocation": {
+    "lat": "37.61899948",
+    "lon": "-122.375"
+  },
+  "DestAirportID": "SFO",
+  "Carrier": "Logstash Airways",
+  "Cancelled": false,
+  "FlightTimeMin": 815.0423417144724,
+  "Origin": "Dubai International Airport",
+  "OriginLocation": {
+    "lat": "25.25279999",
+    "lon": "55.36439896"
+  },
+  "DestRegion": "US-CA",
+  "OriginAirportID": "DXB",
+  "OriginRegion": "SE-BD",
+  "DestCityName": "San Francisco",
+  "FlightTimeHour": 13.58403902857454,
+  "FlightDelayMin": 0
+}

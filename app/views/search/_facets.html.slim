@@ -1,0 +1,22 @@
+- @facets.each do |name, value|
+  - next unless value.count > 0
+  .facet-container.control-type
+    .facet-header
+      span.facet-title #{name}
+    .facet-options
+      - selected_facet_value = facet_selected(name)
+      - if selected_facet_value.present?
+        .facet-option.selected
+          .facet-label style="display: inline;"
+            | #{selected_facet_value}
+            = link_to search_path(params[:index], q: params[:q], filters: remove_filter(name, selected_facet_value)), class: "facet-label", style: "color: #EF5098; display: inline; margin-left: 8px; float: righ;"
+              i.fa.fa-close
+      - else
+        - value.each_with_index do |term, i|
+          /.facet-option.selected data-type="all" 
+          - if term[0].present?
+            .facet-option
+              = link_to search_path(params[:index], q: params[:q], filters: add_filter(name, term[0])), class: 'facet-label', style: "display: inline;"
+                | #{term[0]}
+                small style="position: relative; top: -1px; margin-left: 3px;"
+                  | (#{number_with_delimiter(term[1])})

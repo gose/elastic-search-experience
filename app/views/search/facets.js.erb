@@ -1,0 +1,8 @@
+$(".facet-custom").css("display", "none");
+$(".facet-custom").html("<%= escape_javascript(render(partial: 'facets', locals: { facets: @facets })) %>");
+$(".facet-custom").fadeIn(2000);
+$("a.facet-label").on('click', function(event) {
+  event.preventDefault();
+  var addressValue = $(this).attr("href");
+  runSearch(addressValue);
+});

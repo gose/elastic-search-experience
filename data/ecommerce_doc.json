@@ -1,0 +1,86 @@
+{
+  "category": [
+    "Men's Clothing"
+  ],
+  "currency": "EUR",
+  "customer_first_name": "Muniz",
+  "customer_full_name": "Muniz Walters",
+  "customer_gender": "MALE",
+  "customer_id": 37,
+  "customer_last_name": "Walters",
+  "customer_phone": "",
+  "day_of_week": "Thursday",
+  "day_of_week_i": 3,
+  "email": "muniz@walters-family.zzz",
+  "manufacturer": [
+    "Low Tide Media",
+    "Microlutions"
+  ],
+  "order_date": "2021-05-27T12:47:31+00:00",
+  "order_id": 579362,
+  "products": [
+    {
+      "base_price": 18.99,
+      "discount_percentage": 0,
+      "quantity": 1,
+      "manufacturer": "Low Tide Media",
+      "tax_amount": 0,
+      "product_id": 13737,
+      "category": "Men's Clothing",
+      "sku": "ZO0443604436",
+      "taxless_price": 18.99,
+      "unit_discount_amount": 0,
+      "min_price": 9.87,
+      "_id": "sold_product_579362_13737",
+      "discount_amount": 0,
+      "created_on": "2016-12-22T12:47:31+00:00",
+      "product_name": "Polo shirt - light blue multicolor",
+      "price": 18.99,
+      "taxful_price": 18.99,
+      "base_unit_price": 18.99
+    },
+    {
+      "base_price": 18.99,
+      "discount_percentage": 0,
+      "quantity": 1,
+      "manufacturer": "Microlutions",
+      "tax_amount": 0,
+      "product_id": 23796,
+      "category": "Men's Clothing",
+      "sku": "ZO0119601196",
+      "taxless_price": 18.99,
+      "unit_discount_amount": 0,
+      "min_price": 10.06,
+      "_id": "sold_product_579362_23796",
+      "discount_amount": 0,
+      "created_on": "2016-12-22T12:47:31+00:00",
+      "product_name": "Long sleeved top - mid grey multicolor",
+      "price": 18.99,
+      "taxful_price": 18.99,
+      "base_unit_price": 18.99
+    }
+  ],
+  "sku": [
+    "ZO0443604436",
+    "ZO0119601196"
+  ],
+  "taxful_total_price": 37.98,
+  "taxless_total_price": 37.98,
+  "total_quantity": 2,
+  "total_unique_products": 2,
+  "type": "order",
+  "user": "muniz",
+  "geoip": {
+    "country_iso_code": "MA",
+    "location": {
+      "lon": -8,
+      "lat": 31.6
+    },
+    "region_name": "Marrakech-Tensift-Al Haouz",
+    "continent_name": "Africa",
+    "city_name": "Marrakesh"
+  },
+  "event": {
+    "dataset": "sample_ecommerce"
+  }
+}

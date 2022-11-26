@@ -1,0 +1,19 @@
+li.sr
+  .result href="https://en.wikipedia.org/wiki/#{doc['_source']['name']}" style="padding: 10px; border-radius: 6px; background-color: white; border: 1px solid #ccc; color: #555; min-height: 112px;"
+    img style="fiter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.2)); float: left; margin-right: 15px; display: block; height: 90px; width: 90px; border: 3px solid #ccc;" src="#{asset_path(doc['_source']['image'])}"
+    /.result-type.type-document ##{i + 1}
+    .result-title style="padding-bottom: 5px;"
+      = highlight(doc['_source']['name'])
+      .price style="color: #666; font-size: 0.8em; float: right; border: 1px solid #ccc; border-radius: 3px; padding: 8px; margin: 8px;"
+        | $#{doc['_source']['price']}
+    .result-description
+      div style="color: #666; margin-bottom: 12px;"
+        = highlight(doc['_source']['description'])
+      div.mute style="float: right; text-align: right;" 
+        - if doc['_source']['availability'].include? Time.now.strftime('%A')
+          span style="color: green" Available Today
+        - else
+          span style="olor: red" Unavailable
+      div.mute 
+        = highlight(doc['_source']['diet'])
+  br

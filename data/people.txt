@@ -1,0 +1,121 @@
+POST _bulk
+{ "create" : { "_index" : "people" } }
+{ "id": "1", "supervisor_id": "", "name": "John Smith", "title": "CEO & President", "met": "", "pro": "", "location": "Chicago", "image": "XzA1MTA4MzguanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "2", "supervisor_id": "4", "name": "Monica Watson", "title": "Chief Operating Officer", "met": "", "pro": "", "location": "Chicago", "image": "LmpwZw-14" }
+{ "create" : { "_index" : "people" } }
+{ "id": "3", "supervisor_id": "1", "name": "Kevin Kane", "title": "Chief Finance Officer", "met": "", "pro": "", "location": "Chicago", "image": "XzAwNDgxOTAuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "4", "supervisor_id": "1", "name": "Tim Ernest", "title": "SVP, Operations", "met": "", "pro": "", "location": "Chicago", "image": "XzA1MDY2NzQuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "5", "supervisor_id": "1", "name": "Sam Harris", "title": "President", "met": "", "pro": "", "location": "Chicago", "image": "XzAzNTYxNjUuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "6", "supervisor_id": "1", "name": "Thomas Longfellow", "title": "Chief Compliance Officer", "met": "", "pro": "", "location": "Chicago", "image": "XzA5ODIxMTIuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "7", "supervisor_id": "1", "name": "Kathy Nelson", "title": "Chief Legal Officer", "met": "", "pro": "", "location": "Chicago", "image": "XzA1MjkxNTUuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "8", "supervisor_id": "1", "name": "Jeffrey Thompson", "title": "SVP, Markets", "met": "", "pro": "", "location": "Chicago", "image": "XzAwNjM4NzQuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "9", "supervisor_id": "1", "name": "James Joyce", "title": "SVP, Finance", "met": "", "pro": "", "location": "Chicago", "image": "XzA2NjU4OTkuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "10", "supervisor_id": "1", "name": "Jill Jetson", "title": "Chief Revenue Officer", "met": "", "pro": "", "location": "Chicago", "image": "XzAwMzI2MzEuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "11", "supervisor_id": "1", "name": "Joseph McDougall", "title": "President", "met": "", "pro": "", "location": "Tulsa, OK", "image": "XzAyNTA4NTUuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "12", "supervisor_id": "1", "name": "Steve Getz", "title": "President", "met": "", "pro": "", "location": "Chicago", "image": "XzA2NTgyNTYuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "13", "supervisor_id": "1", "name": "Sam Hanson", "title": "President", "met": "", "pro": "", "location": "Big Rock, MT", "image": "XzA3NjYxMzcuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "14", "supervisor_id": "1", "name": "Kurt Harwood", "title": "President", "met": "", "pro": "", "location": "Albuquerque, NM", "image": "XzA1MTk2MDcuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "15", "supervisor_id": "33", "name": "Tim Case", "title": "IT Infra Automation Engineer", "met": "Yes", "pro": "Yes", "location": "Chicago", "image": "LmpwZw-8" }
+{ "create" : { "_index" : "people" } }
+{ "id": "16", "supervisor_id": "33", "name": "Alex Mason", "title": "Sr Infra Engineer", "met": "Yes", "pro": "Yes", "location": "Chicago", "image": "LmpwZw-7" }
+{ "create" : { "_index" : "people" } }
+{ "id": "17", "supervisor_id": "46", "name": "Jim Patterson", "title": "AVP Infra Product Engineering", "met": "", "pro": "", "location": "Chicago", "image": "XzA1MTAzNTQuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "18", "supervisor_id": "33", "name": "James Fitzpatrick", "title": "Sr Dir, IT Product - Data & Analytics", "met": "", "pro": "", "location": "Chicago", "image": "XzA5NDQyNTMuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "19", "supervisor_id": "23", "name": "Rory Kucher", "title": "Sr Dir, Cloud Migration & Data Strategy", "met": "", "pro": "", "location": "Dallas", "image": "XzAxNTg1NDguanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "20", "supervisor_id": "23", "name": "Al Govaski", "title": "Sr Dir, Data Portfolio", "met": "", "pro": "", "location": "Dallas", "image": "XzAxNTAzNzAuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "21", "supervisor_id": "106", "name": "Chris Nielson", "title": "Sr Dir, Security", "met": "", "pro": "", "location": "Chicago", "image": "XzA3MTYzNDYuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "22", "supervisor_id": "23", "name": "Matt Pane", "title": "VP, Analytics", "met": "", "pro": "", "location": "Chicago", "image": "XzA1MjMxMDMuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "23", "supervisor_id": "26", "name": "Jim Abraham", "title": "CTO", "met": "", "pro": "", "location": "Glen Ellyn, IL", "image": "XzAwNDI0MDguanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "24", "supervisor_id": "23", "name": "Robert Candels", "title": "VP, Advanced Analytics", "met": "", "pro": "", "location": "Chicago", "image": "XzA2MDk5NDkuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "25", "supervisor_id": "26", "name": "Michael Rasmus", "title": "SVP, Enterprise Services", "met": "", "pro": "", "location": "Palatine, IL", "image": "XzAwNjkyNjAuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "26", "supervisor_id": "4", "name": "Mary Rayerson", "title": "SVP, CIO", "met": "", "pro": "", "location": "Chicago", "image": "XzA4MTA5MTQuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "27", "supervisor_id": "23", "name": "Richard Mast", "title": "Delivery & Support", "met": "", "pro": "", "location": "St Charles, IL", "image": "LmpwZw-1" }
+{ "create" : { "_index" : "people" } }
+{ "id": "28", "supervisor_id": "23", "name": "Arther Barkely", "title": "Sr Dir, Infra", "met": "", "pro": "", "location": "Chicago", "image": "XzA3MTQ1MTAuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "29", "supervisor_id": "23", "name": "Matt Camp", "title": "Cloud Automation Engineer", "met": "", "pro": "", "location": "Valparaiso, IN", "image": "XzA5NzU1OTYuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "30", "supervisor_id": "32", "name": "David Bartolski", "title": "Sr Data Scientist - Security", "met": "", "pro": "", "location": "Crown Point, IN", "image": "XzA5MDg1MzcuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "31", "supervisor_id": "33", "name": "Tony Brewers", "title": "Product Manager, Cloud Services", "met": "Yes", "pro": "Yes", "location": "Woodstock, IL", "image": "XzA1NzU0MzMuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "32", "supervisor_id": "35", "name": "Ron Hilt", "title": "Sr Dir, Data Analytics", "met": "Yes", "pro": "Yes", "location": "Chicago", "image": "XzA2ODg4MDQuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "33", "supervisor_id": "46", "name": "Anthony Davey", "title": "VP, Infra Cloud", "met": "Need To", "pro": "", "location": "Chicago", "image": "XzA1MzEwMDIuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "34", "supervisor_id": "26", "name": "Kevin Sommers, PhD", "title": "DSVP and CISO, Security Data Lake", "met": "", "pro": "", "location": "Frisco, Texas", "image": "XzAxODE3NDAuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "35", "supervisor_id": "34", "name": "Rich Stallworth", "title": "Executive Dir, Defense & Investigation", "met": "Yes", "pro": "Neutral", "location": "Chicago", "image": "LmpwZw-4" }
+{ "create" : { "_index" : "people" } }
+{ "id": "36", "supervisor_id": "47", "name": "Todd Anthony", "title": "Sr Dir, Infra Eng, Cloud Logging", "met": "", "pro": "Yes", "location": "Dallas", "image": "LmpwZw-5" }
+{ "create" : { "_index" : "people" } }
+{ "id": "37", "supervisor_id": "34", "name": "Mary Larson", "title": "VP, App Dev", "met": "", "pro": "", "location": "Chicago", "image": "XzAxNTgwOTEuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "38", "supervisor_id": "1", "name": "Manny Garson", "title": "VP", "met": "", "pro": "", "location": "Chicago", "image": "LmpwZw-13" }
+{ "create" : { "_index" : "people" } }
+{ "id": "39", "supervisor_id": "46", "name": "Will Giambini", "title": "VP, Operations", "met": "Need to", "pro": "", "location": "Chicago", "image": "XzA3MzYyMjYuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "40", "supervisor_id": "34", "name": "Alan Park", "title": "Principal Architect", "met": "", "pro": "", "location": "Dallas", "image": "XzA1MTgzMTEuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "41", "supervisor_id": "34", "name": "Stacy Millers", "title": "VP, IT", "met": "", "pro": "", "location": "Chicago", "image": "XzA0Njk5NDYuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "42", "supervisor_id": "34", "name": "Nancy Santos", "title": "VP, Digital Member Channel", "met": "", "pro": "", "location": "Chicago", "image": "XzA3MzIyODEuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "43", "supervisor_id": "34", "name": "Sally Golden", "title": "VP, Data & Analytics", "met": "", "pro": "", "location": "Dallas", "image": "XzA3OTc5OTEuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "44", "supervisor_id": "34", "name": "Alex Meyers", "title": "VP, Ecommerce", "met": "", "pro": "", "location": "Chicago", "image": "XzA5MjUyMzguanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "45", "supervisor_id": "34", "name": "Scott Steele", "title": "Sr Director Information Architecture", "met": "", "pro": "", "location": "Chicago", "image": "XzA2MTMzMjcuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "46", "supervisor_id": "34", "name": "Susan Jacobson", "title": "Head of Infra", "met": "Need To", "pro": "", "location": "", "image": "XzA5NTIzMjEuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "47", "supervisor_id": "17", "name": "Robert Scott", "title": "VP, Infra Strategy & Planning", "met": "", "pro": "", "location": "", "image": "XzA3ODQ2NDcuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "48", "supervisor_id": "17", "name": "Francine Spiteri", "title": "Sr Dir Storage", "met": "", "pro": "", "location": "Chicago", "image": "XzA5NzAyNTguanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "49", "supervisor_id": "17", "name": "Hannah Braston", "title": "Sr Dir Infra Solutions", "met": "", "pro": "", "location": "Chicago", "image": "LmpwZw" }
+{ "create" : { "_index" : "people" } }
+{ "id": "50", "supervisor_id": "17", "name": "William Caters", "title": "Sr Mgr Infra Eng", "met": "", "pro": "", "location": "", "image": "XzA3ODQ2NDcuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "51", "supervisor_id": "17", "name": "Rich Herald", "title": "VP, Infra Strategy & Planning", "met": "", "pro": "", "location": "Houston", "image": "LmpwZw-6" }
+{ "create" : { "_index" : "people" } }
+{ "id": "52", "supervisor_id": "17", "name": "Mary Hanes", "title": "Sr Mgr, Infra Eng, Middleware", "met": "", "pro": "", "location": "Chicago", "image": "LmpwZw-9" }
+{ "create" : { "_index" : "people" } }
+{ "id": "53", "supervisor_id": "46", "name": "Mark Gast", "title": "Exec Dir, Infra Serv Delivery", "met": "", "pro": "", "location": "Chicago", "image": "LmpwZw-11" }
+{ "create" : { "_index" : "people" } }
+{ "id": "54", "supervisor_id": "46", "name": "David Acosi", "title": "VP, Infra Service Mgmt", "met": "", "pro": "", "location": "Chicago", "image": "XzAxNDgyNzUuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "55", "supervisor_id": "46", "name": "Kevin Aston", "title": "Admin Asst", "met": "", "pro": "", "location": "Chicago", "image": "XzA2ODQ5NjUuanBn" }
+{ "create" : { "_index" : "people" } }
+{ "id": "56", "supervisor_id": "33", "name": "Stacie Smith", "title": "Sr Infra Eng Cloud Auto & Tools", "met": "", "pro": "", "location": "Chicago", "image": "LmpwZw-10" }
+{ "create" : { "_index" : "people" } }
+{ "id": "57", "supervisor_id": "33", "name": "Janet Patron", "title": "Product Architect", "met": "", "pro": "", "location": "Chicago", "image": "LmpwZw-15" }
+{ "create" : { "_index" : "people" } }
+{ "id": "58", "supervisor_id": "33", "name": "Denise Hobbs", "title": "Sr Infra Eng Cloud Auto & Tools", "met": "", "pro": "", "location": "Chicago", "image": "LmpwZw-12" }
+{ "create" : { "_index" : "people" } }
+{ "id": "59", "supervisor_id": "33", "name": "Marcie Garcia", "title": "Infra Eng Cloud Auto & Tools, Tomcat, Websphere", "met": "", "pro": "", "location": "Chicago", "image": "LmpwZw-16" }
+{ "create" : { "_index" : "people" } }
+{ "id": "60", "supervisor_id": "33", "name": "Caroline Keys", "title": "Sr Dir Infra Eng", "met": "", "pro": "", "location": "Chicago", "image": "LmpwZw-3" }

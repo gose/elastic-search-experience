@@ -1,0 +1,15 @@
+li.sr
+  .result style="padding: 10px; border-radius: 6px; background-color: white; border: 1px solid #ccc; color: #555;"
+    .result-description style="margin-top: 0;"
+      div style="border-bottom: 1px solid #ccc; margin-bottom: 10px;"
+        = highlight(doc['_source']['order_id'])
+      span style="font-size: 1em; line-height: 1.2em;"
+        = highlight(doc['_source']['customer_full_name'])
+    .result-url
+      span style="font-size: 0.9em; float: right; color: #bbb;"
+        - if doc['_score']
+          div ES Score: #{sprintf("%0.2f", doc['_score'])}
+      /i.fa.fa-link
+        span
+          |  #{doc['_source']['host']}#{doc['_source']['request']}
+  br

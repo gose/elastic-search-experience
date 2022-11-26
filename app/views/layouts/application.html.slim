@@ -1,0 +1,131 @@
+doctype 5
+html
+  head
+    title Elastic Search
+    link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application'
+    = csrf_meta_tags
+    meta content="width=device-width, initial-scale=1.0" name="viewport"
+    meta name="apple-mobile-web-app-capable" content="yes"
+    link rel="shortcut icon" href="#{asset_path 'Path@20.png'}"
+    link rel="apple-touch-icon" href="#{asset_path 'Path@58.png'}"
+    link rel="apple-touch-icon" sizes="76x76" href="#{asset_path 'Path@76.png'}"
+    link rel="apple-touch-icon" sizes="120x120" href="#{asset_path 'Path@120.png'}"
+    link rel="apple-touch-icon" sizes="152x152" href="#{asset_path 'Path@152.png'}"
+  body.view-home.view-index
+    .global-container
+      .global-header
+        #myModal.modal
+          span.close-modal &times;
+          img#img01.modal-content
+          #caption
+        .wrapper
+          a.brand#logo href="/" style="text-decoration: none;"
+            img src="#{asset_path 'elastic-logo.png'}"
+          nav.utility-nav
+            = link_to '#', class: "open-menu"
+              span.app-icon style="font-size: 1.2em; opacity: 0.6;"
+                i.fa.fa-th
+            a.contact-support-control data-open-support="" href=""
+              span.app-icon style="font-size: 1.3em; opacity: 0.6;"
+                i.fa.fa-commenting-o
+            - if session[:user]
+              = link_to logout_path, data: { confirm: 'Logout?'}
+                span.app-icon style="font-size: 1.3em; opacity: 0.6; margin-left: 10px;"
+                  i.fa.fa-sign-out
+            - else
+              = link_to login_path
+                span.app-icon style="font-size: 1.3em; opacity: 0.6; margin-left: 10px;"
+                  i.fa.fa-user-circle-o
+      main.view-container
+        .view-content
+          = yield
+      .support-callout
+        .title
+          - if @count
+            span style="font-weight: bold; font-size: 1.5em;" = number_with_delimiter(@count, delimiter: ",")
+            | &nbsp;documents
+        - if request.path != '/privacy'
+          .privacy style='margin: 20px 0 40px 0; opacity: 0.5;'
+            = link_to 'Privacy Policy', privacy_path
+    #launchpad
+	    .content
+		    nav
+			    a class="icon-analyze" href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/discover" Discover
+			    a class="icon-apm" href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/apm" APM
+			    a class="icon-beats" href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/ingestManager" Beats
+			    a class="icon-kibana" href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243" Kibana
+			    a class="icon-logging" href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/logs" Logs
+			    a class="icon-metrics" href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/metrics" Metrics
+			    a class="icon-logstash" href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/management/ingest/pipelines" Logstash
+			    a class="icon-maps" href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/maps" Maps
+			    a class="icon-observability" href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/observability" Observability
+			    a class="icon-security" href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/security/overview" Security
+			    a class="icon-stack" href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/monitoring" Monitoring
+			    a class="icon-uptime" href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/uptime" Uptime
+    .contact-support-container
+      .wrapper
+        .support-info
+          h2.title Ask Search Team
+          p.description
+            | Can't find something?
+            br
+            | Tell us and we'll look into it.
+          a.toggle-preferences Preferences
+          .toggles
+            .preference
+              label.switch
+                input type="checkbox"
+                span.slider.round
+              span style="position: relative; top: 3px; left: 10px;" Show Scores & Popularity
+            .preference
+              label.switch
+                input type="checkbox"
+                span.slider.round
+              span style="position: relative; top: 3px; left: 10px;" Show "Why Match" &trade;
+            p Indexes:
+            .preference
+              label.switch
+                input type="checkbox"
+                span.slider.round
+              span style="position: relative; top: 3px; left: 10px;" Flight Data
+            .preference
+              label.switch
+                input type="checkbox"
+                span.slider.round
+              span style="position: relative; top: 3px; left: 10px;" eCommerce Sales
+            .preference
+              label.switch
+                input type="checkbox"
+                span.slider.round
+              span style="position: relative; top: 3px; left: 10px;" Web Logs
+            p style="margin-top: 18px; font-size: 0.8em;"
+              a.close-support style="opacity: 0.8;" Close
+        .support-form
+          .form-container.form-open
+            .form
+              /.input
+                input#subject/
+                label for="subject" Subject
+              .input
+                textarea#message
+                label for="message" How can we help?
+              .input
+                input#email
+                label for="email" Email Address
+              .form-actions
+                span.button Send
+                span style="margin-left: 8px;"
+                  a.close-support Cancel
+            .loader
+              svg.uil-ring-alt height="194px" preserveaspectratio="xMidYMid" viewbox=("0 0 100 100") width="194px" xmlns="http://www.w3.org/2000/svg" 
+                rect.bk fill="none" height="100" width="100" x="0" y="0" 
+                circle cx="50" cy="50" fill="none" r="40" stroke="none" stroke-linecap="round" stroke-width="10" 
+                circle cx="50" cy="50" fill="none" r="40" stroke="#258bf8" stroke-linecap="round" stroke-width="6" 
+                  animate attributename="stroke-dashoffset" dur="2s" from="0" repeatcount="indefinite" to="502" 
+                  animate attributename="stroke-dasharray" dur="2s" repeatcount="indefinite" values=("150.6 100.4;1 250;150.6 100.4") 
+            .thanks
+              h2.title Thank you for getting in touch
+              p Our Search Team will review your request shortly.
+              a.close-support href="#" Close

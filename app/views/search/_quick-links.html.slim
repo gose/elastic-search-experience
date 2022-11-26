@@ -1,0 +1,136 @@
+- if params[:q] == 'help'
+  .quick-links
+    h3 style="font-weight: normal;" Example Questions
+    .fade-in-4
+      li.ex
+        a.result.ex href="/search/wikipedia?q=chevy%20chase"
+          | &bull; How old is Chevy Chase?
+      li.ex
+        a.result.ex href="/search/wikipedia?q=search%20history"
+          | &bull; What are the most popular searches on the Corporate Intranet?
+      li.ex
+        a.result.ex href="/search/wikipedia?q=apm"
+          | &bull; What is the avg page load of this application?
+      li.ex
+        a.result.ex href="/search/wikipedia?q=search%20history"
+          | &bull; Who searched for what on the Corporate Intranet?
+      li.ex
+        a.result.ex href="/search/people?q=kevin%20kane"
+          | &bull; What's Kevin Kane's extension?
+      li.ex
+        a.result.ex href="/search/lunch"
+          | &bull; What's for lunch today?
+      li.ex
+        a.result.ex href="/search/people?filters=Location%3ADallas"
+          | &bull; How many people work out of Dallas?
+      li.ex
+        a.result.ex href="/search/wikipedia?q=keywords"
+          | &bull; See a list of Quick Link keywords
+- elsif params[:q] == 'keywords'
+  .quick-links
+    h3 style="font-weight: normal;" Quick Link Keywords
+    .fade-in-4
+      li.ex
+        a.result.ex href="/search/wikipedia?q=help"
+          | &bull; help
+      li.ex
+        a.result.ex href="/search/wikipedia?q=elastic"
+          | &bull; elastic
+      li.ex
+        a.result.ex href="/search/wikipedia?q=apm"
+          | &bull; apm
+      li.ex
+        a.result.ex href="/search/wikipedia?q=discover"
+          | &bull; discover
+      li.ex
+        a.result.ex href="/search/wikipedia?q=kibana"
+          | &bull; kibana
+      li.ex
+        a.result.ex href="/search/wikipedia?q=search%20history"
+          | &bull; search history
+      li.ex
+        a.result.ex href="/search/wikipedia?q=feedback"
+          | &bull; feedback
+- elsif params[:q] == 'feedback'
+  .quick-links
+    h3 Quick Links
+    li.ql
+      a.result href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/dashboards#/view/37bd2b30-3c95-11eb-9bc0-1581b16821fc?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-24h,to:now))&_a=(description:'',filters:!(),fullScreenMode:!f,options:(hidePanelTitles:!f,useMargins:!t),query:(language:kuery,query:''),timeRestore:!f,title:Feedback,viewMode:view)"
+        .fade-in-1 style="margin: 0; border: 1px solid #ccc; padding: 4px; border-radius: 4px; background-color: white; width: 80px; text-align: center;"
+          img src="https://gose.s3.us-east-1.amazonaws.com/elastic/kibana-logo-color.png" style="height: 50px;"
+          span style="font-size: 0.9em; font-weight: bold;" Dashboard
+- elsif params[:q] == 'search history'
+  .quick-links
+    h3 Quick Links
+    li.ql
+      a.result href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/dashboards#/view/8f594e90-3c5a-11eb-9bc0-1581b16821fc?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-24h,to:now))&_a=(description:'',filters:!(),fullScreenMode:!f,options:(hidePanelTitles:!f,useMargins:!t),query:(language:kuery,query:''),timeRestore:!f,title:'Search%20History',viewMode:view)"
+        .fade-in-1 style="margin: 0; border: 1px solid #ccc; padding: 4px; border-radius: 4px; background-color: white; width: 80px; text-align: center;"
+          img src="https://gose.s3.us-east-1.amazonaws.com/elastic/kibana-logo-color.png" style="height: 50px;"
+          span style="font-size: 0.9em; font-weight: bold;" Dashboard
+- elsif params[:q] == 'elastic'
+  .quick-links
+    h3 Quick Links
+    li.ql
+      a.result href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/discover"
+        .fade-in-1 style="margin: 0; border: 1px solid #ccc; padding: 4px; border-radius: 4px; background-color: white; width: 80px; text-align: center;"
+          img src="https://gose.s3.us-east-1.amazonaws.com/elastic/kibana-logo-color.png" style="height: 50px;"
+          span style="font-size: 0.9em; font-weight: bold;" Discover
+    li.ql
+      a.result href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/logs"
+        .fade-in-2 style="margin: 0; border: 1px solid #ccc; padding: 4px; border-radius: 4px; background-color: white; width: 80px; text-align: center;"
+          img src="https://gose.s3.us-east-1.amazonaws.com/elastic/logging-logo-color.png" style="height: 50px;"
+          span style="font-size: 0.9em; font-weight: bold;" Logs
+    li.ql
+      a.result href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/metrics"
+        .fade-in-3 style="margin: 0; border: 1px solid #ccc; padding: 4px; border-radius: 4px; background-color: white; width: 80px; text-align: center;"
+          img src="https://gose.s3.us-east-1.amazonaws.com/elastic/metrics-logo-color.png" style="height: 50px;"
+          span style="font-size: 0.9em; font-weight: bold;" Metrics
+    li.ql
+      a.result href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/apm"
+        .fade-in-4 style="margin: 0; border: 1px solid #ccc; padding: 4px; border-radius: 4px; background-color: white; width: 80px; text-align: center;"
+          img src="https://gose.s3.us-east-1.amazonaws.com/elastic/apm-logo-color.png" style="height: 50px;"
+          span style="font-size: 0.9em; font-weight: bold;" APM
+    li.ql
+      a.result href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/uptime"
+        .fade-in-5 style="margin: 0; border: 1px solid #ccc; padding: 4px; border-radius: 4px; background-color: white; width: 80px; text-align: center;"
+          img src="https://gose.s3.us-east-1.amazonaws.com/elastic/uptime-logo-color.png" style="height: 50px;"
+          span style="font-size: 0.9em; font-weight: bold;" Uptime
+    li.ql
+      a.result href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/maps"
+        .fade-in-6 style="margin: 0; border: 1px solid #ccc; padding: 4px; border-radius: 4px; background-color: white; width: 80px; text-align: center;"
+          img src="https://gose.s3.us-east-1.amazonaws.com/elastic/maps-logo-color.png" style="height: 50px;"
+          span style="font-size: 0.9em; font-weight: bold;" Maps
+    li.ql
+      a.result href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/management/ingest/pipelines"
+        .fade-in-7 style="margin: 0; border: 1px solid #ccc; padding: 4px; border-radius: 4px; background-color: white; width: 80px; text-align: center;"
+          img src="https://gose.s3.us-east-1.amazonaws.com/elastic/logstash-logo-color.png" style="height: 50px;"
+          span style="font-size: 0.9em; font-weight: bold;" Logstash
+    li.ql
+      a.result href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/security/overview"
+        .fade-in-8 style="margin: 0; border: 1px solid #ccc; padding: 4px; border-radius: 4px; background-color: white; width: 80px; text-align: center;"
+          img src="https://gose.s3.us-east-1.amazonaws.com/elastic/siem-logo-color.png" style="height: 50px;"
+          span style="font-size: 0.9em; font-weight: bold;" Security
+- elsif params[:q] == 'uptime'
+  .quick-links
+    h3 Quick Links
+    li.ql
+      a.result href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/uptime"
+        .fade-in-3 style="margin: 0; border: 1px solid #ccc; padding: 4px; border-radius: 4px; background-color: white; width: 80px; text-align: center;"
+          img src="https://gose.s3.us-east-1.amazonaws.com/elastic/uptime-logo-color.png" style="height: 50px;"
+          span style="font-size: 0.9em; font-weight: bold;" Uptime
+- elsif params[:q] == 'discover' || params[:q] == 'kibana'
+  .quick-links
+    h3 Quick Links
+    li.ql
+      a.result href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/discover"
+        .fade-in-3 style="margin: 0; border: 1px solid #ccc; padding: 4px; border-radius: 4px; background-color: white; width: 80px; text-align: center;"
+          img src="https://gose.s3.us-east-1.amazonaws.com/elastic/kibana-logo-color.png" style="height: 50px;"
+          span style="font-size: 0.9em; font-weight: bold;" Discover
+- elsif params[:q] == 'apm'
+  .quick-links
+    h3 Quick Links
+    li.ql
+      a.result href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/apm/services/corp-intranet/transactions?rangeFrom=now-15m&rangeTo=now&transactionType=request&environment=production"
+        .fade-in-3 style="margin: 0; border: 1px solid #ccc; padding: 4px; border-radius: 4px; background-color: white; width: 80px; text-align: center;"
+          img src="https://gose.s3.us-east-1.amazonaws.com/elastic/apm-logo-color.png" style="height: 50px;"
+          span style="font-size: 0.9em; font-weight: bold;" APM

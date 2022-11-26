@@ -1,0 +1,149 @@
+{
+  "tags": [
+    "beats_input_raw_event"
+  ],
+  "ecs": {
+    "version": "1.6.0"
+  },
+  "process": {
+    "pid": 730
+  },
+  "host": {
+    "name": "node"
+  },
+  "service": {
+    "type": "haproxy",
+    "address": "tcp://127.0.0.1:14567"
+  },
+  "@timestamp": "2021-02-04T00:00:06.745Z",
+  "agent": {
+    "hostname": "node",
+    "name": "node",
+    "ephemeral_id": "0a9447ea-2131-46fa-b546-a5b1e506cee0",
+    "version": "7.10.2",
+    "type": "metricbeat",
+    "id": "bf105deb-de9e-4229-ad5a-ed5710763d99"
+  },
+  "haproxy": {
+    "info": {
+      "dropped_logs": 0,
+      "ulimit_n": 1023,
+      "jobs": 210,
+      "busy_polling": 0,
+      "failed_resolutions": 0,
+      "uptime": {
+        "sec": 166071
+      },
+      "connection": {
+        "hard_max": 472,
+        "max": 472,
+        "total": 191809,
+        "rate": {
+          "limit": 0,
+          "value": 3,
+          "max": 84
+        },
+        "ssl": {
+          "max": 0,
+          "current": 433,
+          "total": 193069
+        },
+        "current": 199
+     },
+      "unstoppable_jobs": 0,
+      "tasks": 649,
+      "compress": {
+        "bps": {
+          "in": 0,
+          "out": 0,
+          "rate_limit": 0
+        }
+      },
+      "stopping": 0,
+      "session": {
+        "rate": {
+          "limit": 0,
+          "value": 3,
+          "max": 84
+        }
+      },
+      "pool": {
+        "used": 3,
+        "failed": 0,
+        "allocated": 3
+      },
+      "sockets": {
+        "max": 1023
+      },
+      "zlib_mem_usage": {
+        "value": 0,
+        "max": 0
+      },
+      "requests": {
+        "total": 1842795
+      },
+      "peers": {
+        "connected": 0,
+        "active": 0
+      },
+      "ssl": {
+        "cache_misses": 269,
+        "rate": {
+          "limit": 0,
+          "value": 3,
+          "max": 84
+        },
+        "backend": {
+          "key_rate": {
+            "value": 0,
+            "max": 16
+          }
+        },
+        "frontend": {
+          "session_reuse": {
+            "pct": 0
+          },
+          "key_rate": {
+            "value": 3,
+            "max": 83
+          }
+        },
+        "cached_lookups": 34667
+      },
+      "idle": {
+        "pct": 1
+      },
+      "threads": 8,
+      "processes": 1,
+      "memory": {
+        "max": {
+          "bytes": 0
+        }
+      },
+      "bytes": {
+        "out": {
+          "rate": 1220672,
+          "total": 93283222410
+        }
+      },
+      "listeners": 10,
+      "run_queue": 1,
+      "process_num": 1,
+      "pipes": {
+        "used": 0,
+        "max": 0,
+        "free": 0
+      }
+    }
+  },
+  "@version": "1",
+  "metricset": {
+    "name": "info",
+    "period": 10000
+  },
+  "event": {
+    "module": "haproxy",
+    "dataset": "haproxy.info",
+    "duration": 554314
+  }
+}

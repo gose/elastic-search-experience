@@ -1,0 +1,47 @@
+POST _bulk
+{ "create" : { "_index" : "lunch" } }
+{ "name": "Chicken Wings", "category": "Appetizers", "description": "Tender, spicy and juicy. Original style or breaded.", "cuisine_name": "American", "diet": "Meat", "image": "chicken-wings.jpg", "price": 8.95, "availability": ["Monday", "Tuesday", "Thursday", "Friday"] }
+{ "create" : { "_index" : "lunch" } }
+{ "name": "Chicken Roll", "category": "Appetizers", "description": "Chicken topped with sauce, served with a roll to soak up the sauce", "cuisine_name": "French", "diet": "Meat", "image": "chicken-roll.jpg", "price": 7.95, "availability": ["Tuesday", "Wednesday", "Thursday", "Friday"] }
+{ "create" : { "_index" : "lunch" } }
+{ "name": "Spicy Mixed Olives", "category": "Appetizers", "description": "Co-starring garlic, pepper and chili", "cuisine_name": "Mediterranean", "diet": "Vegan", "image": "olives.jpg", "price": 5.95, "availability": ["Monday", "Tuesday", "Wednesday", "Friday"] }
+{ "create" : { "_index" : "lunch" } }
+{ "name": "Hummus", "category": "Appetizers", "description": "Pour smoky oil over creamy hummus and dig in with strips of warm pita", "cuisine_name": "Indian", "diet": "Vegan", "image": "hummus.jpg", "price": 5.95, "availability": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] }
+{ "create" : { "_index" : "lunch" } }
+{ "name": "Red Pepper Dip", "category": "Appetizers", "description": "Dive into temping roasted red pepper and chili spice dip with warm pita Strips", "cuisine_name": "French", "diet": "Vegetarian", "image": "pepper-dip.jpg", "price": 3.95, "availability": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] }
+{ "create" : { "_index" : "lunch" } }
+{ "name": "Appetizer Platter", "category": "Appetizers", "description": "Choose any three appetizers", "cuisine_name": "French", "diet": "Meat", "image": "app-platter.jpg", "price": 12.95, "availability": ["Monday", "Tuesday", "Wednesday", "Thursday"] }
+{ "create" : { "_index" : "lunch" } }
+{ "name": "All Together Now", "category": "Appetizers", "description": "Spicy mixed olives, red pepper dip, hummus with drizzle and warm pita strips", "cuisine_name": "Indian", "diet": "Vegetarian", "image": "platter.jpg", "price": 15.95, "availability": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] }
+{ "create" : { "_index" : "lunch" } }
+{ "name": "Wedges", "category": "Sides", "description": "Spicy potato wedges served with sour cream.", "cuisine_name": "American", "diet": "Vegetarian", "image": "wedges.jpg", "price": 7.95, "availability": ["Monday", "Tuesday", "Wednesday", "Thursday"] }
+{ "create" : { "_index" : "lunch" } }
+{ "name": "Whole Chicken", "category": "Entree", "description": "Whole chicken marinated in sauce and grilled", "cuisine_name": "American", "diet": "Meat", "image": "chicken.jpg", "price": 14.95, "availability": ["Tuesday", "Thursday"] }
+{ "create" : { "_index" : "lunch" } }
+{ "name": "Chicken Skewers", "category": "Entree", "description": "Tender marinated chicken thighs and fresh peppers, served on a skewer", "cuisine_name": "American", "diet": "Meat", "image": "skewers.jpg", "price": 12.95, "availability": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] }
+{ "create" : { "_index" : "lunch" } }
+{ "name": "Chicken Peppers", "category": "Entree", "description": "Flame-grilled thighs, stuffed with feta and parsley, skewered with mixed peppers", "cuisine_name": "American", "diet": "Meat", "image": "peppers.jpg", "price": 12.95, "availability": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] }
+{ "create" : { "_index" : "lunch" } }
+{ "name": "Grilled Chicken Tenders", "category": "Entree", "description": "Juicy and tender, delicious with all sides", "cuisine_name": "American", "diet": "Meat", "image": "tenders.jpg", "price": 10.95, "availability": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] }
+{ "create" : { "_index" : "lunch" } }
+{ "name": "Caramel Cheese Cake", "category": "Dessert", "description": "Cheese cake drizzled with caramel and a side of whip cream.", "cuisine_name": "American", "diet": "Vegetarian", "image": "caramel-cake.jpg", "price": 5.95, "availability": ["Monday", "Tuesday", "Thursday", "Friday"] }
+{ "create" : { "_index" : "lunch" } }
+{ "name": "Lighten Up Chocolate Cake", "category": "Dessert", "description": "Our famous chocolate cake that is light and fluffy.", "cuisine_name": "American", "diet": "Vegetarian", "image": "chocolate-cake.jpg", "price": 5.95, "availability": ["Monday", "Tuesday", "Thursday", "Friday"] }
+{ "create" : { "_index" : "lunch" } }
+{ "name": "House-Made Chips", "category": "Sides", "description": "Crunchy chips with sauce", "cuisine_name": "American", "diet": "Vegan", "image": "chips.jpg", "price": 2.95, "availability": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] }
+{ "create" : { "_index" : "lunch" } }
+{ "name": "Spicy Rice", "category": "Sides", "description": "Chopped jalapenos keep this rice on the spicy side.", "cuisine_name": "American", "diet": "Vegan", "image": "rice.jpg", "price": 2.95, "availability": ["Monday", "Tuesday", "Wednesday", "Friday"] }
+{ "create" : { "_index" : "lunch" } }
+{ "name": "Coleslaw", "category": "Sides", "description": "Cabbage, carrot, and special sauce made in-house.", "cuisine_name": "American", "diet": "Vegetarian", "image": "slaw.jpg", "price": 2.95, "availability": ["Tuesday", "Wednesday", "Thursday", "Friday"] }
+{ "create" : { "_index" : "lunch" } }
+{ "name": "Grilled Vegetables", "category": "Sides", "description": "An assortment of vegetables grilled to perfection.", "cuisine_name": "American", "diet": "Vegan", "image": "veggies.jpg", "price": 8.95, "availability": ["Monday", "Tuesday", "Thursday", "Friday"] }
+{ "create" : { "_index" : "lunch" } }
+{ "name": "Portuguese Salad", "category": "Salads", "description": "Fresh tomato, olives, mixed peppers, cucumber and onion on a bed of crisp lettuce.", "cuisine_name": "American", "diet": "Vegetarian", "image": "port-salad.jpg", "price": 8.95, "availability": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] }
+{ "create" : { "_index" : "lunch" } }
+{ "name": "Mediterranean Salad", "category": "Salads", "description": "Piccolo tomato, cucumber, sweet peppers and mixed Leaves. Sprinkled with Olives and Feta Cheese", "cuisine_name": "American", "diet": "Vegetarian", "image": "med-salad.jpg", "price": 8.95, "availability": ["Monday", "Tuesday", "Wednesday"] }
+{ "create" : { "_index" : "lunch" } }
+{ "name": "Caesar Salad", "category": "Salads", "description": "Lettuce sprinkled with parmesan cheese, caesar dressing and crunchy croutons", "cuisine_name": "American", "diet": "Vegetarian", "image": "ces-salad.jpg", "price": 9.95, "availability": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] }
+{ "create" : { "_index" : "lunch" } }
+{ "name": "Chicken Wrap", "description": "A lightly toasted wrap, generously filled with tender chicken, chili jam, green leaf lettuce and tangy yogurt sauce.", "cuisine_name": "American", "diet": "Meat", "image": "wrap.jpg", "price": 8.95, "availability": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] }
+{ "create" : { "_index" : "lunch" } }
+{ "name": "Chicken Pita", "description": "Served in a lightly toasted pita, stuffed with chicken tenders, crisp veggie salad and creamy whip", "cuisine_name": "American", "diet": "Meat", "image": "pita.jpg", "price": 9.95, "availability": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] }

@@ -1,0 +1,130 @@
+.facets
+  - if @indices
+    /.facets-header style="font-size: 0.9em;"
+      | Facets
+    .facet-container.control-type
+      .facet-header
+        span.facet-title Index
+      .facet-options
+        - @indices.each_with_index do |term, i|
+          .facet-option class=('selected' if params[:index] == term[0])
+            = link_to search_path(term[0], q: params[:q]), class: 'facet-label', style: "display: inline;"
+              | #{term[0].titleize}
+              /- if term[1] >= 10000
+                small style="position: relative; top: -1px; margin-left: 3px;"
+                  | (10k+)
+              /- else
+                small style="position: relative; top: -1px; margin-left: 3px;"
+                  | (#{number_with_delimiter(term[1])})
+    .facet-container.control-sort
+      .facet-header
+        span.facet-title Sort by
+      .facet-options
+        .facet-option.Xselected
+          span.facet-label Relevance
+        .facet-option
+          span.facet-label Created at
+        .facet-option
+          span.facet-label Updated at
+    .facet-container.facet-custom style="margin-bottom: 0;"
+      .facet-header
+        span.facet-title style="opacity: 0.8;" Filters
+      .loading
+      /.spinner
+        .rect1
+        .rect2
+        .rect3
+        .rect4
+      /= render 'facets'
+.results-container
+  .results
+    - if (params[:q] == 'ds' || params[:q] == 'data sources' || params[:q] == 'dl') && params[:filters].blank?
+      /.search-summary
+        span style="float: right;"
+          b Indexed
+          /span style="color: #999; margin-right: 5px; font-size: 0.9em;"
+            | index:
+          /span.badge style="color: white; background-color: #EF5098; font-size: 0.9em; font-weight: bold;"
+            | Data Sources
+        b Data Source
+      table.data-sources
+        thead
+          tr
+            th style="text-align: left;" Data Lake
+            th style="text-align: left;" Last Seen
+            th width=100 Sample
+            th width=40 Indexed
+        tbody
+          - @ds.each_with_index do |doc, i|
+            tr
+              td = doc[:name]
+              td.mute style="font-size: 0.9em;" = doc[:last_seen]
+              td.ctr style="font-size: 0.7em;"
+                = link_to search_path("events", {"q" => "ea06a14d-625a-4507-af9b-b1f959db2185"})
+                  i.fa.fa-file-text-o
+              td.ctr
+                - if doc[:indexed]
+                  i.fa.fa-check-square-o style="color: green;"
+                - else
+                  i.fa.fa-square-o
+    - elsif params[:q] == "ea06a14d-625a-4507-af9b-b1f959db2185"
+      .search-summary
+        | Sample Event
+      pre style="color: #333; font-size: 0.8em; background-color: #eee;"
+        = @doc
+    - elsif current_user || true
+      = render 'quick-links'
+      .search-summary
+        span style="float: right;"
+          span style="color: #999; margin-right: 5px; font-size: 0.9em;"
+            | index:
+          span.badge style="color: white; background-color: #EF5098; font-size: 0.9em; font-weight: bold;"
+            | #{params[:index].titleize}
+        - if @results.total <= 10
+          | Showing #{@results.total}
+        - else
+          |  Showing 1-10 of
+          - if @results.total == 10000
+            |  #{number_with_delimiter(@results.total)}+
+          - else
+            |  #{number_with_delimiter(@results.total)}
+        - if params[:q].present?
+          |  results for "<em>#{params[:q]}</em>" took
+        - else
+          |  results took
+        - if @took > 1000
+          span style="font-size: 0.9em;" &nbsp;#{sprintf("%0.1f", @took / 1000)}s
+        - else
+          span style="font-size: 0.9em;" &nbsp;#{sprintf("%0.0f", @took)}ms
+      - @results.each_with_index do |doc, i|
+        - if doc['_index'] == 'kibana_sample_data_logs'
+          = render 'results-web-logs', doc: doc, i: i
+        - elsif doc['_index'] == 'kibana_sample_data_ecommerce'
+          = render 'results-ecommerce-orders', doc: doc, i: i
+        - elsif doc['_index'] == 'kibana_sample_data_flights'
+          = render 'results-flight-data', doc: doc, i: i
+        - elsif doc['_index'] == 'lunch'
+          = render 'results-lunch', doc: doc, i: i
+        - elsif doc['_index'] == 'people'
+          = render 'results-people', doc: doc, i: i
+        - elsif doc['_index'] == 'search-history'
+          = render 'results-search-history', doc: doc, i: i
+  .pagination
+    - if @results && @results.total > 10
+      - pages = (@results.total / 10)
+      - if pages > 6
+        a.prev.disabled Previous
+        a.page.active 1
+        a.page 2
+        a.page 3
+        span.separator &hellip;
+        a.page 6
+        a.page 7
+        a.next Next
+      - else
+        a.prev.disabled Previous
+        - pages.times do |page|
+          - if (params[:page].blank? && page == 0) || params[:page] == 1
+            = link_to page + 1, search_path(params[:index], q: params[:q], filters: params[:filters], page: page + 1), class: 'page disabled'
+          - else
+            = link_to page + 1, search_path(params[:index], q: params[:q], filters: params[:filters], page: page + 1), class: 'page'

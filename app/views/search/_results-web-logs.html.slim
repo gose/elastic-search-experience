@@ -1,0 +1,42 @@
+li.sr
+  .result href="/" style="padding: 10px; border-radius: 6px; background-color: white; border: 1px solid #ccc; color: #555;"
+    /.result-type.type-document ##{i + 1}
+    /.result-title style="font-weight: normal; font-size: 1.0em; color: #666;" = doc['_source']['message']
+    .result-description style="margin-top: 0;"
+      div style="border-bottom: 1px solid #ccc; margin-bottom: 10px;"
+        - fields = doc['_source']['message'].split
+        table style="width: 100%;"
+          tr
+            td style="font-size: 0.8em;"
+              - if doc['_source']['message'] =~ /Firefox/
+                img src="#{asset_path 'firefox.png'}" width="25" height="25" style="display: inline-block;"
+                div style="display: inline-block; position: relative; top: -5px; left: 5px; font-weight: bold; color: #999;"
+                  |  Firefox
+              - elsif doc['_source']['message'] =~ /Safari/
+                img src="#{asset_path 'safari.png'}" width="25" height="25" style="display: inline-block;"
+                div style="display: inline-block; position: relative; top: -5px; left: 5px; font-weight: bold; color: #999;"
+                  |  Safari
+              - elsif doc['_source']['message'] =~ /Chrome/
+                img src="#{asset_path 'chrome.png'}" width="25" height="25" style="display: inline-block;"
+                div style="display: inline-block; position: relative; top: -5px; left: 5px; font-weight: bold; color: #999;"
+                  |  Chrome
+            td &nbsp;
+            td align="right" width="20"
+              - color = "25BBB0"
+              - if fields[7].starts_with?("2")
+              - elsif fields[7].starts_with?("4")
+                - color = "EF6D02"
+              - elsif fields[7].starts_with?("5")
+                - color = "E81F1D"
+              div style="padding: 2px 5px; font-weight: bold; background-color: ##{color}; border-radius: 3px; color: white; font-size: 0.8em"
+                | #{fields[7]}
+      span style="font-size: 1em; line-height: 1.2em;"
+        = highlight(doc['_source']['message'])
+    .result-url
+      span style="font-size: 0.9em; float: right; color: #bbb;"
+        - if doc['_score']
+          div ES Score: #{sprintf("%0.2f", doc['_score'])}
+      /i.fa.fa-link
+        span
+          |  #{doc['_source']['host']}#{doc['_source']['request']}
+  br

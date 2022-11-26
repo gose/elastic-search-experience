@@ -1,0 +1,39 @@
+.view-hero
+  .wrapper
+    .hero-search.search-container
+      span.search-icon style="font-size: 1.4em; opacity: 0.5; right: 3px; bottom: 3px;"
+        i.fa.fa-search
+      span.loading-icon style="font-size: 1.4em; opacity: 0.5;"
+        i.fa.fa-refresh.fa-spin.fa-fw
+      /a.clear-icon href="/"
+        span style="font-size: 1.4em; opacity: 0.5;"
+          i.fa.fa-close.fa-fw
+      form#search-form
+        input#search autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search" value="#{params[:q]}"
+    .search-ui-container
+      .facets
+      .results-container
+        .results
+          .search-summary
+          .search-results style="vertical-align: middle;"
+            .spinner
+              .rect1
+              .rect2
+              .rect3
+              .rect4
+  - if current_user
+    .index-toc
+      .index-toc-header.fade-in-2 Indices:
+      = link_to 'All', search_path("all"), class: 'fade-in-0'
+      = link_to 'Web Logs', search_path("web-logs"), class: 'fade-in-1'
+      = link_to 'Flight Data', search_path("flight-data"), class: 'fade-in-2'
+      = link_to 'eCommerce Orders', search_path("ecommerce-orders"), class: 'fade-in-3'
+      = link_to 'Search History', search_path("search-history"), class: 'fade-in-4'
+      = link_to 'User Feedback', search_path("user-feedback"), class: 'fade-in-5'
+  - else
+    .index-toc
+      .index-toc-header.fade-in-2 Indices:
+      = link_to 'All', search_path("all"), class: 'fade-in-0'
+      = link_to 'Web Logs', search_path("web-logs"), class: 'fade-in-1'
+      = link_to 'Flight Data', search_path("flight-data"), class: 'fade-in-2'
+      = link_to 'eCommerce Orders', search_path("ecommerce-orders"), class: 'fade-in-3'

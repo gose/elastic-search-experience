@@ -1,0 +1,10 @@
+.view-hero
+  .wrapper
+    div style="display: flex; justify-content: center; margin-bottom: 80px;"
+      div style="margin: 0 auto;"
+        h1 style="margin-bottom: 0;" Login
+        = form_tag auth_path do
+          input.form-control placeholder="Login" type="text" name="login"
+          input.form-control placeholder="Password" type="password" name="password"
+          input.btn.btn-block type="submit" value="Submit" style="margin: 0 20px 10px 0;"
+          small = link_to 'Cancel', root_path

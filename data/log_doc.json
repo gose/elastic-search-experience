@@ -1,0 +1,38 @@
+{
+  "agent": "Mozilla/5.0 (X11; Linux x86_64; rv:6.0a1) Gecko/20110421 Firefox/6.0a1",
+  "bytes": 4682,
+  "clientip": "160.189.170.26",
+  "extension": "",
+  "geo": {
+    "srcdest": "TW:TW",
+    "src": "TW",
+    "dest": "TW",
+    "coordinates": {
+      "lat": 39.97338139,
+      "lon": -90.40373556
+    }
+  },
+  "host": "www.elastic.co",
+  "index": "kibana_sample_data_logs",
+  "ip": "160.189.170.26",
+  "machine": {
+    "ram": 16106127360,
+    "os": "win xp"
+  },
+  "memory": null,
+  "message": "160.189.170.26 - - [2018-08-09T12:51:01.613Z] \"GET /beats/metricbeat HTTP/1.1\" 200 4682 \"-\" \"Mozilla/5.0 (X11; Linux x86_64; rv:6.0a1) Gecko/20110421 Firefox/6.0a1\"",
+  "phpmemory": null,
+  "referer": "http://www.elastic-elastic-elastic.com/success/reinhard-furrer",
+  "request": "/beats/metricbeat",
+  "response": 200,
+  "tags": [
+    "success",
+    "security"
+  ],
+  "timestamp": "2021-05-27T12:51:01.613Z",
+  "url": "https://www.elastic.co/downloads/beats/metricbeat",
+  "utc_time": "2021-05-27T12:51:01.613Z",
+  "event": {
+    "dataset": "sample_web_logs"
+  }
+}

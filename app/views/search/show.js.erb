@@ -1,0 +1,12 @@
+$(".search-ui-container").html("<%= escape_javascript(render(partial: 'results', locals: { results: @results })) %>")
+setupImageModal();
+if ($("#search").val().endsWith(":")) {
+  let x = $("#search").val().split(":");
+  $("#search").val(x[1].trim());
+}
+/* Not working as intended.
+$("a.result.ex").on('click', function(event) {
+  event.preventDefault();
+  var addressValue = $(this).attr("href");
+  runSearch(addressValue);
+}); */
