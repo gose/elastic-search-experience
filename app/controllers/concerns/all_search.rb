@@ -13,7 +13,11 @@ module AllSearch
     #filter_lookup['Machine OS'] = 'machine.os.keyword'
     #filter_lookup['Extension'] = 'extension.keyword'
 
-    index = AllRepository.new
+    if current_user
+      index = AllRepository.new
+    else
+      index = PublicRepository.new
+    end
 
     # Build the Query DSL
     definition = search do
@@ -67,10 +71,10 @@ module AllSearch
     # Show the query and timing
     logger.debug definition.to_json
     if took_ms < 1000
-      logger.debug "Web Logs ES #{type.titleize} Query: " +
+      logger.debug "All ES #{type.titleize} Query: " +
         "#{sprintf("%0.0f", took_ms)} ms 🚀".light_green
     else
-      logger.debug "Web Logs ES #{type.titleize} Query: " +
+      logger.debug "All ES #{type.titleize} Query: " +
         "#{sprintf("%0.1f", took_ms / 1000 )} seconds 🐢".light_red
     end
 

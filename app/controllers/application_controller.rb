@@ -1,15 +1,29 @@
 class ApplicationController < ActionController::Base
 
+  before_action :init_site
+
   def healthcheck
     head :ok, content_type: "text/html"
   end
 
-  helper_method :current_user
+  helper_method :current_user, :admin?
 
   private
 
+    def init_site
+      if cookies.encrypted[:logo] == 'custom'
+        @logo = 'custom-logo.png'
+      else
+        @logo = 'elastic-logo.png'
+      end
+    end
+
     def current_user
       @current_user ||= session[:user] if session[:user]
+    end
+
+    def admin?
+      current_user && @current_user == 'admin'
     end
 
     def login_required
@@ -19,4 +33,10 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    def admin_required
+      unless admin?
+        flash[:notice] = "Not Authorized"
+        redirect_to root_path
+      end
+    end
 end

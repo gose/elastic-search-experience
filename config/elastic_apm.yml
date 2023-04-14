@@ -2,7 +2,7 @@
   
 # Set service name - allowed characters: a-z, A-Z, 0-9, -, _ and space
 # Defaults to the name of your Rails app
-service_name: 'demo'
+service_name: 'search'
 
 # Use if APM Server requires a token
 secret_token: <%= Rails.application.credentials.dig(:elastic_apm, :secret_token) %>
@@ -10,7 +10,7 @@ secret_token: <%= Rails.application.credentials.dig(:elastic_apm, :secret_token)
 # Set custom APM Server URL (default: http://localhost:8200)
 server_url: <%= Rails.application.credentials.dig(:elastic_apm, :server_url) %>
 
-verify_server_cert: true
+# verify_server_cert: true
 # server_ca_cert: './config/ca.crt'
 
 # log_level: <%= Logger::DEBUG %>

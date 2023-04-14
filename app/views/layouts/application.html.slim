@@ -1,11 +1,17 @@
-doctype 5
+doctype html
 html
   head
     title Elastic Search
     link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"
-    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
-    = javascript_include_tag 'application'
+
+    = stylesheet_link_tag "application", "data-turbo-track": "reload"
+    = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
     = csrf_meta_tags
+    = csp_meta_tag
+
+    script src="https://unpkg.com/@elastic/apm-rum/dist/bundles/elastic-apm-rum.umd.min.js" crossorigin
+    javascript:
+      elasticApm.init()
     meta content="width=device-width, initial-scale=1.0" name="viewport"
     meta name="apple-mobile-web-app-capable" content="yes"
     link rel="shortcut icon" href="#{asset_path 'Path@20.png'}"
@@ -22,16 +28,16 @@ html
           #caption
         .wrapper
           a.brand#logo href="/" style="text-decoration: none;"
-            img src="#{asset_path 'elastic-logo.png'}"
+            img src="#{asset_path @logo}"
           nav.utility-nav
             = link_to '#', class: "open-menu"
               span.app-icon style="font-size: 1.2em; opacity: 0.6;"
                 i.fa.fa-th
             a.contact-support-control data-open-support="" href=""
-              span.app-icon style="font-size: 1.3em; opacity: 0.6;"
-                i.fa.fa-commenting-o
+              span.app-icon style="font-size: 1.3em; opacity: 0.8;"
+                i.fa.fa-commenting-o style="position: relative; left: 1px; top: -1px;"
             - if session[:user]
-              = link_to logout_path, data: { confirm: 'Logout?'}
+              = link_to logout_path, data: { confirm: 'Logout?' }
                 span.app-icon style="font-size: 1.3em; opacity: 0.6; margin-left: 10px;"
                   i.fa.fa-sign-out
             - else
@@ -52,18 +58,18 @@ html
     #launchpad
 	    .content
 		    nav
-			    a class="icon-analyze" href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/discover" Discover
-			    a class="icon-apm" href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/apm" APM
-			    a class="icon-beats" href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/ingestManager" Beats
-			    a class="icon-kibana" href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243" Kibana
-			    a class="icon-logging" href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/logs" Logs
-			    a class="icon-metrics" href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/metrics" Metrics
-			    a class="icon-logstash" href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/management/ingest/pipelines" Logstash
-			    a class="icon-maps" href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/maps" Maps
-			    a class="icon-observability" href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/observability" Observability
-			    a class="icon-security" href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/security/overview" Security
-			    a class="icon-stack" href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/monitoring" Monitoring
-			    a class="icon-uptime" href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/uptime" Uptime
+			    a class="icon-analyze" href="https://kibana.corp-intranet.com/app/discover" Discover
+			    a class="icon-apm" href="https://kibana.corp-intranet.com/app/apm" APM
+			    a class="icon-beats" href="https://kibana.corp-intranet.com/app/ingestManager" Beats
+			    a class="icon-kibana" href="https://kibana.corp-intranet.com" Kibana
+			    a class="icon-logging" href="https://kibana.corp-intranet.com/app/logs" Logs
+			    a class="icon-metrics" href="https://kibana.corp-intranet.com/app/metrics" Metrics
+			    a class="icon-logstash" href="https://kibana.corp-intranet.com/app/management/ingest/pipelines" Logstash
+			    a class="icon-maps" href="https://kibana.corp-intranet.com/app/maps" Maps
+			    a class="icon-observability" href="https://kibana.corp-intranet.com/app/observability" Observability
+			    a class="icon-security" href="https://kibana.corp-intranet.com/app/security/overview" Security
+			    a class="icon-stack" href="https://kibana.corp-intranet.com/app/monitoring" Monitoring
+			    a class="icon-uptime" href="https://kibana.corp-intranet.com/app/uptime" Uptime
     .contact-support-container
       .wrapper
         .support-info
@@ -72,36 +78,40 @@ html
             | Can't find something?
             br
             | Tell us and we'll look into it.
-          a.toggle-preferences Preferences
-          .toggles
-            .preference
-              label.switch
-                input type="checkbox"
-                span.slider.round
-              span style="position: relative; top: 3px; left: 10px;" Show Scores & Popularity
-            .preference
-              label.switch
-                input type="checkbox"
-                span.slider.round
-              span style="position: relative; top: 3px; left: 10px;" Show "Why Match" &trade;
-            p Indexes:
-            .preference
-              label.switch
-                input type="checkbox"
-                span.slider.round
-              span style="position: relative; top: 3px; left: 10px;" Flight Data
-            .preference
-              label.switch
-                input type="checkbox"
-                span.slider.round
-              span style="position: relative; top: 3px; left: 10px;" eCommerce Sales
-            .preference
-              label.switch
-                input type="checkbox"
-                span.slider.round
-              span style="position: relative; top: 3px; left: 10px;" Web Logs
-            p style="margin-top: 18px; font-size: 0.8em;"
-              a.close-support style="opacity: 0.8;" Close
+          - if current_user
+            a.toggle-preferences Preferences
+            .toggles
+              .preference
+                label.switch
+                  input type="checkbox"
+                  span.slider.round
+                span style="position: relative; top: 3px; left: 10px;" Show Scores & Popularity
+              .preference
+                label.switch
+                  input type="checkbox"
+                  span.slider.round
+                span style="position: relative; top: 3px; left: 10px;" Show "Why Match" &trade;
+              p Sources:
+              .preference
+                label.switch
+                  input type="checkbox" checked="true"
+                  span.slider.round
+                span style="position: relative; top: 3px; left: 10px;" Flight Data
+              .preference
+                label.switch
+                  input type="checkbox" checked="true"
+                  span.slider.round
+                span style="position: relative; top: 3px; left: 10px;" eCommerce Sales
+              .preference
+                label.switch
+                  input type="checkbox" checked="true"
+                  span.slider.round
+                span style="position: relative; top: 3px; left: 10px;" Web Logs
+              p Logo:
+              .preference
+                = select_tag(:logo, options_for_select([["Elastic", "elastic"], ["Custom", "custom"]], cookies.encrypted[:logo]), id: "logo-select", class: "form-control", style: "width: 200px;")
+          p style="margin-top: 18px; font-size: 0.8em;"
+            a.close-support style="opacity: 0.8;" Close
         .support-form
           .form-container.form-open
             .form

@@ -4,18 +4,23 @@
       | Facets
     .facet-container.control-type
       .facet-header
-        span.facet-title Index
-      .facet-options
-        - @indices.each_with_index do |term, i|
+        span.facet-title Source
+      .facet-options.index-counts
+        - @indices.each do |term|
           .facet-option class=('selected' if params[:index] == term[0])
-            = link_to search_path(term[0], q: params[:q]), class: 'facet-label', style: "display: inline;"
-              | #{term[0].titleize}
-              /- if term[1] >= 10000
-                small style="position: relative; top: -1px; margin-left: 3px;"
+            = link_to search_path(term[0], q: params[:q]), class: 'facet-label'
+              - if term[1] > 0 || term[1] == -1
+                span id="#{term[0]}_index" = term[0].titleize
+              - else
+                span.mute id="#{term[0]}_index" = term[0].titleize
+              - if term[1] >= 10000
+                span.index_count id="#{term[0]}_index_count" style="display: inline;"
                   | (10k+)
-              /- else
-                small style="position: relative; top: -1px; margin-left: 3px;"
+              - elsif term[1] > 0
+                span.index_count id="#{term[0]}_index_count" style="display: inline;"
                   | (#{number_with_delimiter(term[1])})
+              - else
+                span.index_count id="#{term[0]}_index_count"
     .facet-container.control-sort
       .facet-header
         span.facet-title Sort by
@@ -103,6 +108,10 @@
           = render 'results-ecommerce-orders', doc: doc, i: i
         - elsif doc['_index'] == 'kibana_sample_data_flights'
           = render 'results-flight-data', doc: doc, i: i
+        - elsif doc['_index'] == 'flights'
+          = render 'results-flights', doc: doc, i: i
+        - elsif doc['_index'] == 'kibana_sample_data_logs'
+          = render 'results-logs', doc: doc, i: i
         - elsif doc['_index'] == 'lunch'
           = render 'results-lunch', doc: doc, i: i
         - elsif doc['_index'] == 'people'

@@ -4,5 +4,5 @@ $(".facet-custom").fadeIn(2000);
 $("a.facet-label").on('click', function(event) {
   event.preventDefault();
   var addressValue = $(this).attr("href");
-  runSearch(addressValue);
+  window.RunSearch(addressValue);
 });

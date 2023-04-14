@@ -893,6 +893,14 @@ nav a + a {
   outline: 0;
 }
 
+.index_count {
+  position: relative;
+  top: 1px;
+  margin-left: 3px;
+  font-size: 0.85em;
+  display: none;
+}
+
 .support-callout {
   border-top: 1px solid #E9EDF2;
   padding: 10px;
@@ -1198,6 +1206,10 @@ nav a + a {
 
 .facet-option {
   margin: 0 0 5px;
+}
+
+a.facet-label {
+  display: inline;
 }
 
 .facet-option .facet-label {
@@ -2177,7 +2189,6 @@ a[class^="icon"] {
 
 .toggle-preferences {
   color: #ccc;
-  font-size: 0.9em;
   cursor: pointer;
   margin-top: 18px;
 }

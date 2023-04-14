@@ -6,7 +6,7 @@ module EcommerceOrders
   include Elasticsearch::DSL
 
   # type = quick, search, facet
-  def ecommerce_orders_search(type, query, filters, page, sort)
+  def ecommerce_search(type, query, filters, page, sort)
 
     filter_lookup = {}
     filter_lookup['Currency'] = 'currency'

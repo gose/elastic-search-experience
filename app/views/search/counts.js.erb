@@ -1,0 +1,13 @@
+<% @indices.each do |term| %>
+  if ($("#<%= term[0] %>_index_count").is(":hidden")) {
+    <% if term[1] >= 10000 %>
+      $("#<%= term[0] %>_index_count").html("(10k+)");
+      $("#<%= term[0] %>_index_count").fadeTo(2000, 1.0);
+    <% elsif term[1] > 0 %>
+      $("#<%= term[0] %>_index_count").html("(<%= number_with_delimiter(term[1]) %>)");
+      $("#<%= term[0] %>_index_count").fadeTo(2000, 1.0);
+    <% else %>
+      $("#<%= term[0] %>_index").fadeTo(2000, 0.6);
+    <% end %>
+  }
+<% end %>

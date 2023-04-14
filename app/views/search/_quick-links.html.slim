@@ -3,16 +3,16 @@
     h3 style="font-weight: normal;" Example Questions
     .fade-in-4
       li.ex
-        a.result.ex href="/search/wikipedia?q=chevy%20chase"
+        a.result.ex href="/search/all?q=chevy%20chase"
           | &bull; How old is Chevy Chase?
       li.ex
-        a.result.ex href="/search/wikipedia?q=search%20history"
+        a.result.ex href="/search/all?q=search%20history"
           | &bull; What are the most popular searches on the Corporate Intranet?
       li.ex
-        a.result.ex href="/search/wikipedia?q=apm"
+        a.result.ex href="/search/all?q=apm"
           | &bull; What is the avg page load of this application?
       li.ex
-        a.result.ex href="/search/wikipedia?q=search%20history"
+        a.result.ex href="/search/all?q=search%20history"
           | &bull; Who searched for what on the Corporate Intranet?
       li.ex
         a.result.ex href="/search/people?q=kevin%20kane"
@@ -24,38 +24,38 @@
         a.result.ex href="/search/people?filters=Location%3ADallas"
           | &bull; How many people work out of Dallas?
       li.ex
-        a.result.ex href="/search/wikipedia?q=keywords"
+        a.result.ex href="/search/all?q=keywords"
           | &bull; See a list of Quick Link keywords
 - elsif params[:q] == 'keywords'
   .quick-links
     h3 style="font-weight: normal;" Quick Link Keywords
     .fade-in-4
       li.ex
-        a.result.ex href="/search/wikipedia?q=help"
+        a.result.ex href="/search/all?q=help"
           | &bull; help
       li.ex
-        a.result.ex href="/search/wikipedia?q=elastic"
+        a.result.ex href="/search/all?q=elastic"
           | &bull; elastic
       li.ex
-        a.result.ex href="/search/wikipedia?q=apm"
+        a.result.ex href="/search/all?q=apm"
           | &bull; apm
       li.ex
-        a.result.ex href="/search/wikipedia?q=discover"
+        a.result.ex href="/search/all?q=discover"
           | &bull; discover
       li.ex
-        a.result.ex href="/search/wikipedia?q=kibana"
+        a.result.ex href="/search/all?q=kibana"
           | &bull; kibana
       li.ex
-        a.result.ex href="/search/wikipedia?q=search%20history"
+        a.result.ex href="/search/all?q=search%20history"
           | &bull; search history
       li.ex
-        a.result.ex href="/search/wikipedia?q=feedback"
+        a.result.ex href="/search/all?q=feedback"
           | &bull; feedback
 - elsif params[:q] == 'feedback'
   .quick-links
     h3 Quick Links
     li.ql
-      a.result href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/dashboards#/view/37bd2b30-3c95-11eb-9bc0-1581b16821fc?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-24h,to:now))&_a=(description:'',filters:!(),fullScreenMode:!f,options:(hidePanelTitles:!f,useMargins:!t),query:(language:kuery,query:''),timeRestore:!f,title:Feedback,viewMode:view)"
+      a.result href="https://kibana.corp-intranet.com/app/dashboards#/view/014caad0-6e89-11ed-8dba-93df64907231?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-7d,to:now))"
         .fade-in-1 style="margin: 0; border: 1px solid #ccc; padding: 4px; border-radius: 4px; background-color: white; width: 80px; text-align: center;"
           img src="https://gose.s3.us-east-1.amazonaws.com/elastic/kibana-logo-color.png" style="height: 50px;"
           span style="font-size: 0.9em; font-weight: bold;" Dashboard
@@ -63,7 +63,7 @@
   .quick-links
     h3 Quick Links
     li.ql
-      a.result href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/dashboards#/view/8f594e90-3c5a-11eb-9bc0-1581b16821fc?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-24h,to:now))&_a=(description:'',filters:!(),fullScreenMode:!f,options:(hidePanelTitles:!f,useMargins:!t),query:(language:kuery,query:''),timeRestore:!f,title:'Search%20History',viewMode:view)"
+      a.result href="https://kibana.corp-intranet.com/app/dashboards#/view/69ae9490-6e88-11ed-8dba-93df64907231?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-7d,to:now))"
         .fade-in-1 style="margin: 0; border: 1px solid #ccc; padding: 4px; border-radius: 4px; background-color: white; width: 80px; text-align: center;"
           img src="https://gose.s3.us-east-1.amazonaws.com/elastic/kibana-logo-color.png" style="height: 50px;"
           span style="font-size: 0.9em; font-weight: bold;" Dashboard
@@ -71,42 +71,42 @@
   .quick-links
     h3 Quick Links
     li.ql
-      a.result href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/discover"
+      a.result href="https://kibana.corp-intranet.com/app/discover"
         .fade-in-1 style="margin: 0; border: 1px solid #ccc; padding: 4px; border-radius: 4px; background-color: white; width: 80px; text-align: center;"
           img src="https://gose.s3.us-east-1.amazonaws.com/elastic/kibana-logo-color.png" style="height: 50px;"
           span style="font-size: 0.9em; font-weight: bold;" Discover
     li.ql
-      a.result href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/logs"
+      a.result href="https://kibana.corp-intranet.com/app/logs"
         .fade-in-2 style="margin: 0; border: 1px solid #ccc; padding: 4px; border-radius: 4px; background-color: white; width: 80px; text-align: center;"
           img src="https://gose.s3.us-east-1.amazonaws.com/elastic/logging-logo-color.png" style="height: 50px;"
           span style="font-size: 0.9em; font-weight: bold;" Logs
     li.ql
-      a.result href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/metrics"
+      a.result href="https://kibana.corp-intranet.com/app/metrics"
         .fade-in-3 style="margin: 0; border: 1px solid #ccc; padding: 4px; border-radius: 4px; background-color: white; width: 80px; text-align: center;"
           img src="https://gose.s3.us-east-1.amazonaws.com/elastic/metrics-logo-color.png" style="height: 50px;"
           span style="font-size: 0.9em; font-weight: bold;" Metrics
     li.ql
-      a.result href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/apm"
+      a.result href="https://kibana.corp-intranet.com/app/observability/overview"
         .fade-in-4 style="margin: 0; border: 1px solid #ccc; padding: 4px; border-radius: 4px; background-color: white; width: 80px; text-align: center;"
           img src="https://gose.s3.us-east-1.amazonaws.com/elastic/apm-logo-color.png" style="height: 50px;"
           span style="font-size: 0.9em; font-weight: bold;" APM
     li.ql
-      a.result href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/uptime"
+      a.result href="https://kibana.corp-intranet.com/app/uptime"
         .fade-in-5 style="margin: 0; border: 1px solid #ccc; padding: 4px; border-radius: 4px; background-color: white; width: 80px; text-align: center;"
           img src="https://gose.s3.us-east-1.amazonaws.com/elastic/uptime-logo-color.png" style="height: 50px;"
           span style="font-size: 0.9em; font-weight: bold;" Uptime
     li.ql
-      a.result href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/maps"
+      a.result href="https://kibana.corp-intranet.com/app/maps"
         .fade-in-6 style="margin: 0; border: 1px solid #ccc; padding: 4px; border-radius: 4px; background-color: white; width: 80px; text-align: center;"
           img src="https://gose.s3.us-east-1.amazonaws.com/elastic/maps-logo-color.png" style="height: 50px;"
           span style="font-size: 0.9em; font-weight: bold;" Maps
     li.ql
-      a.result href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/management/ingest/pipelines"
+      a.result href="https://kibana.corp-intranet.com/app/management/ingest/pipelines"
         .fade-in-7 style="margin: 0; border: 1px solid #ccc; padding: 4px; border-radius: 4px; background-color: white; width: 80px; text-align: center;"
           img src="https://gose.s3.us-east-1.amazonaws.com/elastic/logstash-logo-color.png" style="height: 50px;"
           span style="font-size: 0.9em; font-weight: bold;" Logstash
     li.ql
-      a.result href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/security/overview"
+      a.result href="https://kibana.corp-intranet.com/app/security/overview"
         .fade-in-8 style="margin: 0; border: 1px solid #ccc; padding: 4px; border-radius: 4px; background-color: white; width: 80px; text-align: center;"
           img src="https://gose.s3.us-east-1.amazonaws.com/elastic/siem-logo-color.png" style="height: 50px;"
           span style="font-size: 0.9em; font-weight: bold;" Security
@@ -114,7 +114,7 @@
   .quick-links
     h3 Quick Links
     li.ql
-      a.result href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/uptime"
+      a.result href="https://kibana.corp-intranet.com/app/uptime"
         .fade-in-3 style="margin: 0; border: 1px solid #ccc; padding: 4px; border-radius: 4px; background-color: white; width: 80px; text-align: center;"
           img src="https://gose.s3.us-east-1.amazonaws.com/elastic/uptime-logo-color.png" style="height: 50px;"
           span style="font-size: 0.9em; font-weight: bold;" Uptime
@@ -122,7 +122,7 @@
   .quick-links
     h3 Quick Links
     li.ql
-      a.result href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/discover"
+      a.result href="https://kibana.corp-intranet.com/app/discover"
         .fade-in-3 style="margin: 0; border: 1px solid #ccc; padding: 4px; border-radius: 4px; background-color: white; width: 80px; text-align: center;"
           img src="https://gose.s3.us-east-1.amazonaws.com/elastic/kibana-logo-color.png" style="height: 50px;"
           span style="font-size: 0.9em; font-weight: bold;" Discover
@@ -130,7 +130,7 @@
   .quick-links
     h3 Quick Links
     li.ql
-      a.result href="https://88baa9a5c85d4bf4895e75a1410d8f29.us-central1.gcp.cloud.es.io:9243/app/apm/services/corp-intranet/transactions?rangeFrom=now-15m&rangeTo=now&transactionType=request&environment=production"
+      a.result href="https://kibana.corp-intranet.com/app/observability/overview"
         .fade-in-3 style="margin: 0; border: 1px solid #ccc; padding: 4px; border-radius: 4px; background-color: white; width: 80px; text-align: center;"
           img src="https://gose.s3.us-east-1.amazonaws.com/elastic/apm-logo-color.png" style="height: 50px;"
           span style="font-size: 0.9em; font-weight: bold;" APM

@@ -15,10 +15,8 @@ module ApplicationHelper
       else
         raw string
       end
-    elsif string =~ /#{params[:q]}/i
-      raw string.gsub(/(#{params[:q]})/i, '<em>\1</em>')
     else
-      string
+      raw string.to_s.gsub(/(#{params[:q]})/i, '<em>\1</em>')
     end
   end
 

@@ -1,5 +1,5 @@
 $(".search-ui-container").html("<%= escape_javascript(render(partial: 'results', locals: { results: @results })) %>")
-setupImageModal();
+//setupImageModal();
 if ($("#search").val().endsWith(":")) {
   let x = $("#search").val().split(":");
   $("#search").val(x[1].trim());
