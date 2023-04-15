@@ -102,22 +102,16 @@
         - else
           span style="font-size: 0.9em;" &nbsp;#{sprintf("%0.0f", @took)}ms
       - @results.each_with_index do |doc, i|
-        - if doc['_index'] == 'kibana_sample_data_logs'
-          = render 'results-web-logs', doc: doc, i: i
-        - elsif doc['_index'] == 'kibana_sample_data_ecommerce'
-          = render 'results-ecommerce-orders', doc: doc, i: i
-        - elsif doc['_index'] == 'kibana_sample_data_flights'
-          = render 'results-flight-data', doc: doc, i: i
-        - elsif doc['_index'] == 'flights'
-          = render 'results-flights', doc: doc, i: i
-        - elsif doc['_index'] == 'kibana_sample_data_logs'
+        - if doc['_index'] =~ /.ds-kibana_sample_data_logs-/
           = render 'results-logs', doc: doc, i: i
+        - elsif doc['_index'] == 'kibana_sample_data_ecommerce'
+          = render 'results-ecommerce', doc: doc, i: i
+        - elsif doc['_index'] == 'kibana_sample_data_flights'
+          = render 'results-flights', doc: doc, i: i
         - elsif doc['_index'] == 'lunch'
           = render 'results-lunch', doc: doc, i: i
         - elsif doc['_index'] == 'people'
           = render 'results-people', doc: doc, i: i
-        - elsif doc['_index'] == 'search-history'
-          = render 'results-search-history', doc: doc, i: i
   .pagination
     - if @results && @results.total > 10
       - pages = (@results.total / 10)

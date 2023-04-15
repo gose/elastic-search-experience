@@ -21,7 +21,6 @@ gem 'slim'
 # gem 'addressable'
 gem 'colorize'
 # gem 'omniauth-google-oauth2'
-gem 'prettier'
 
 # Elasticsearch
 gem 'elasticsearch-rails'
@@ -36,6 +35,5 @@ end
 group :development do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'mail_interceptor'
+  gem 'prettier'
 end
-
-gem "dartsass-rails", "~> 0.4.1"

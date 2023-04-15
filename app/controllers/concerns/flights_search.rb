@@ -8,31 +8,33 @@ module FlightsSearch
   # type = quick, search, facet
   def flights_search(type, query, filters, page, sort)
 
+    # Facets
     filter_lookup = {}
-    filter_lookup['Date'] = 'scheduled_departure_time'
-    filter_lookup['Airline'] = 'carrier'
-    filter_lookup['Origin'] = 'origin'
-    filter_lookup['Destination'] = 'destination'
-    filter_lookup['Tail'] = 'tail'
-    filter_lookup['Air Time'] = 'air_time_min'
+    filter_lookup['Date'] = '@timestamp'
+    filter_lookup['Carrier'] = 'Carrier'
+    filter_lookup['Origin'] = 'Origin'
+    filter_lookup['Destination'] = 'Dest'
+    filter_lookup['Air Time'] = 'FlightTimeMin'
 
     index = FlightsRepository.new
 
-    # Elasticsearch::DSL::Search::Aggregations::DateHistogram.option_method :calendar_interval
+    #Elasticsearch::DSL::Search::Aggregations::DateHistogram.option_method :calendar_interval
 
     # Build the Query DSL
     definition = search do
       if type == 'facet'
         size 0
+=begin
         aggregation :date do
           date_histogram do
             field    filter_lookup['Date']
-            interval '1y'
+            #interval 'day'
           end
         end
-        aggregation :airline do
+=end
+        aggregation :carrier do
           terms do
-            field filter_lookup['Airline']
+            field filter_lookup['Carrier']
             size  5
           end
         end
@@ -45,12 +47,6 @@ module FlightsSearch
         aggregation :destination do
           terms do
             field filter_lookup['Destination']
-            size  5
-          end
-        end
-        aggregation :tail do
-          terms do
-            field filter_lookup['Tail']
             size  5
           end
         end
@@ -77,7 +73,7 @@ module FlightsSearch
               multi_match do
                 query   query
                 type    "best_fields"
-                fields  ["airline", "carrier", "tail", "number", "origin_city", "destination_city", "origin", "destination", "origin_name", "destination_name"]
+                fields  ["carrier", "number", "origin_city", "destination_city", "origin", "destination", "origin_name", "destination_name"]
                 # fuzziness "AUTO"
               end
             else
@@ -88,10 +84,7 @@ module FlightsSearch
       end
       if type == 'search' && query.present?
         highlight fields: {
-          airline: {},
           carrier: {},
-          tail: {},
-          number: {},
           origin: {},
           destination: {},
           origin_city: {},
@@ -111,10 +104,10 @@ module FlightsSearch
     # Show the query and timing
     logger.debug definition.to_json
     if took_ms < 1000
-      logger.debug "Flights ES #{type.titleize} Query: " +
+      logger.debug "Flight Data ES #{type.titleize} Query: " +
         "#{sprintf("%0.0f", took_ms)} ms 🚀".light_green
     else
-      logger.debug "Flights ES #{type.titleize} Query: " +
+      logger.debug "Flight Data ES #{type.titleize} Query: " +
         "#{sprintf("%0.1f", took_ms / 1000 )} seconds 🐢".light_red
     end
 
@@ -122,18 +115,20 @@ module FlightsSearch
       filters = ActiveSupport::OrderedHash.new
 
       # date Filter
+=begin
       date = ActiveSupport::OrderedHash.new
       for term in results.response.aggregations.date.buckets.map
         date[Time.at(term[:key] / 1000).strftime("%Y")] = term[:doc_count]
       end
       filters["Date"] = date
+=end
 
-      # airline Filter
-      airline = ActiveSupport::OrderedHash.new
-      for term in results.response.aggregations.airline.buckets.map
-        airline[term[:key]] = term[:doc_count].to_s
+      # carrier Filter
+      carrier = ActiveSupport::OrderedHash.new
+      for term in results.response.aggregations.carrier.buckets.map
+        carrier[term[:key]] = term[:doc_count].to_s
       end
-      filters["Airline"] = airline
+      filters["Carrier"] = carrier
 
       # origin Filter
       origin = ActiveSupport::OrderedHash.new
@@ -148,13 +143,6 @@ module FlightsSearch
         destination[term[:key]] = term[:doc_count].to_s
       end
       filters["Destination"] = destination
-
-      # tail Filter
-      tail = ActiveSupport::OrderedHash.new
-      for term in results.response.aggregations.tail.buckets.map
-        tail[term[:key]] = term[:doc_count].to_s
-      end
-      filters["Tail"] = tail
 
       # air_time Filter
       air_time = ActiveSupport::OrderedHash.new

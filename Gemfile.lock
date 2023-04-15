@@ -76,8 +76,6 @@ GEM
     crass (1.0.6)
     cssbundling-rails (1.1.2)
       railties (>= 6.0.0)
-    dartsass-rails (0.4.1)
-      railties (>= 6.0.0)
     date (3.3.3)
     debug (1.7.2)
       irb (>= 1.5.0)
@@ -291,7 +289,6 @@ DEPENDENCIES
   bootsnap
   colorize
   cssbundling-rails
-  dartsass-rails (~> 0.4.1)
   debug
   elastic-apm
   elasticsearch-dsl

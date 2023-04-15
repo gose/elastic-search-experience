@@ -1,6 +1,6 @@
 require 'elasticsearch/dsl'
 
-module EcommerceOrders
+module EcommerceSearch
 
   extend ActiveSupport::Concern
   include Elasticsearch::DSL
@@ -17,7 +17,7 @@ module EcommerceOrders
     filter_lookup['Region'] = 'region'
     filter_lookup['Country'] = 'country'
 
-    index = EcommerceOrdersRepository.new
+    index = EcommerceRepository.new
 
     # Build the Query DSL
     definition = search do
@@ -165,25 +165,31 @@ module EcommerceOrders
       filters["City"] = city
 
       # network Filter
+=begin
       network = ActiveSupport::OrderedHash.new
       for term in results.response.aggregations.network.buckets.map
         network[term[:key]] = term[:doc_count].to_s
       end
       filters["Network"] = network
+=end
 
       # plan Filter
+=begin
       plan = ActiveSupport::OrderedHash.new
       for term in results.response.aggregations.plan.buckets.map
         plan[term[:key]] = term[:doc_count].to_s
       end
       filters["Plan"] = plan
+=end
 
       # card_type Filter
+=begin
       card_type = ActiveSupport::OrderedHash.new
       for term in results.response.aggregations.card_type.buckets.map
         card_type[term[:key]] = term[:doc_count].to_s
       end
       filters["Card Type"] = card_type
+=end
     end
 
     return results, filters, took_ms

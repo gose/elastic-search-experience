@@ -6,7 +6,11 @@ class AllRepository
     # client Elasticsearch::Client.new url: 'http://localhost:9200'#, log: true
     client Elasticsearch::Client.new(
              # log: true,
-             transport_options: { ssl: { ca_file: Rails.root.join("config/http_ca.crt").to_s } },
+             transport_options: {
+               ssl: {
+                 ca_file: Rails.root.join("config/http_ca.crt").to_s
+               }
+             },
              user: Rails.application.credentials.dig(:elastic_local, :user),
              password:
                Rails.application.credentials.dig(:elastic_local, :password),
@@ -25,8 +29,7 @@ class AllRepository
            )
   end
 
-  index_name 'lunch,people'
-  # index_name "kibana_sample_data_logs,kibana_sample_data_flights,kibana_sample_data_ecommerce,lunch,people"
+  index_name "kibana_sample_data_logs,kibana_sample_data_flights,kibana_sample_data_ecommerce,lunch,people"
 
   def deserialize(document)
     document #['_source']

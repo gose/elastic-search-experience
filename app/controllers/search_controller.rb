@@ -1,39 +1,21 @@
 class SearchController < ApplicationController
-
   include AllSearch
+  include PublicSearch
 
   # Public Repos
-  include FlightData
-  include WebLogs
-  #include EcommerceOrders
+  include EcommerceSearch
+  include FlightsSearch
+  include LogsSearch
 
   # Private Repos
   include LunchSearch
   include PeopleSearch
-  #include ATMSearch
-  #include CanvasSearch
-  #include DashboardSearch
-  #include ElasticDocsSearch
-  #include FlightsSearch
-  #include IntranetSearch
 
-  PUBLIC_REPOS = [
-    "all",
-#   "web_logs",
-#   "flight_data",
-#   "ecommerce",
-  ]
-
-  PRIVATE_REPOS = [
-#   "docs",
-#   "flights",
-    "lunch",
-    "people",
-  ]
+  PUBLIC_REPOS = %w[logs ecommerce flights]
+  PRIVATE_REPOS = %w[lunch people]
 
   def index
-    @count = public_count
-    @count += private_count if current_user
+    calculate_count
   end
 
   def counts
@@ -41,16 +23,15 @@ class SearchController < ApplicationController
     repos = PUBLIC_REPOS
     repos += PRIVATE_REPOS if current_user
     repos.each do |index|
-      @indices[index] =
-        Rails
-          .cache
-          .fetch("#{index}-#{params[:q]}", expires_in: 1.minutes) do
-            # Update the cache if it does not already have a value for this key.
-            method = "#{index}_search"
-            results, facets, took =
-              send(method.to_sym, 'quick', params[:q], nil, nil, nil)
-            results.total
-          end
+      @indices[index] = Rails
+        .cache
+        .fetch("#{index}-#{params[:q]}", expires_in: 1.minutes) do
+          # Update the cache if it does not already have a value for this key.
+          method = "#{index}_search"
+          results, facets, took =
+            send(method.to_sym, "quick", params[:q], nil, nil, nil)
+          results.total
+        end
     end
 
     respond_to do |format|
@@ -60,33 +41,27 @@ class SearchController < ApplicationController
   end
 
   def facets
-    index = 'all'
-    index = params[:index].gsub(/-/, '_') if params[:index].present?
+    index = "all"
+    index = params[:index].gsub(/-/, "_") if params[:index].present?
 
     if current_user
       # Dynamically build the method name to be called, then call it.
-      method = "#{index}_search".gsub(/-/, '-')
+      method = "#{index}_search".gsub(/-/, "-")
       results, @facets, took =
-        send(method.to_sym, 'facet', params[:q], params[:filters], nil, nil)
+        send(method.to_sym, "facet", params[:q], params[:filters], nil, nil)
     else
-      if index == 'ecommerce'
+      if index == "ecommerce"
         results, @facets, took =
-          ecommerce_search(
-            'facet',
-            params[:q],
-            params[:filters],
-            nil,
-            nil
-          )
-      elsif index == 'flight_data'
+          ecommerce_search("facet", params[:q], params[:filters], nil, nil)
+      elsif index == "flights"
         results, @facets, took =
-          flight_data_search('facet', params[:q], params[:filters], nil, nil)
-      elsif index == 'web_logs'
+          flights_search("facet", params[:q], params[:filters], nil, nil)
+      elsif index == "logs"
         results, @facets, took =
-          web_logs_search('facet', params[:q], params[:filters], nil, nil)
+          logs_search("facet", params[:q], params[:filters], nil, nil)
       else
         results, @facets, took =
-          all_search('facet', params[:q], params[:filters], nil, nil)
+          public_search("facet", params[:q], params[:filters], nil, nil)
       end
     end
 
@@ -96,7 +71,7 @@ class SearchController < ApplicationController
           timestamp: "#{Time.now.utc.iso8601}",
           session_id: "#{session.id}",
           user: current_user,
-          action: 'facet',
+          action: "facet",
           index: "#{params[:index]}",
           query: "#{params[:q]}",
           filters: "#{params[:filters]}",
@@ -118,27 +93,27 @@ class SearchController < ApplicationController
     #
     # Keyword Redirects
     #
-    if params[:q] == 'logout'
+    if params[:q] == "logout"
       render js: "window.location = '/logout'"
-    elsif params[:q] == 'login'
+    elsif params[:q] == "login"
       render js: "window.location = '/login'"
     end
 
     #
-    # Default index is 'all'
+    # Default index is 'public'
     # Replace dashes with underscores for other indices
     # (we use dashes in the URL since they're easier to read)
     #
     if params[:index].present? && user_authorized?(params[:index])
-      index = params[:index].gsub(/-/, '_')
+      index = params[:index].gsub(/-/, "_")
     else
-      index = 'all'
+      index = "public"
     end
 
     #
     # Parse the query
     #
-    if params[:q] == 'ds' || params[:q] == 'data sources' || params[:q] == 'dl'
+    if params[:q] == "ds" || params[:q] == "data sources" || params[:q] == "dl"
       @ds = []
       for dir in %w[
         apm-server
@@ -160,8 +135,8 @@ class SearchController < ApplicationController
         utilization
       ]
         indexed = false
-        indexed = true if dir == 'utilization' || dir == 'nginx' ||
-          dir == 'atm' || dir == 'flights' || dir == 'apm-server'
+        indexed = true if dir == "utilization" || dir == "nginx" ||
+          dir == "atm" || dir == "flights" || dir == "apm-server"
         last_seen = rand(2..18)
         @ds << {
           name: dir,
@@ -172,19 +147,19 @@ class SearchController < ApplicationController
       @indices = ActiveSupport::OrderedHash.new
       %w[docs].each { |index| @indices[index] = -1 }
     elsif params[:index].present? &&
-          params[:q] == 'ea06a14d-625a-4507-af9b-b1f959db2185'
-      @doc = File.read('public/sample.json')
+          params[:q] == "ea06a14d-625a-4507-af9b-b1f959db2185"
+      @doc = File.read("public/sample.json")
     elsif index.present? && request.xhr?
       #
       # A normal search request, broken out into authenticated users and non-authenticated.
       #
       if current_user
         # Dynamically build the method name to be called, then call it.
-        method = "#{index}_search".gsub(/-/, '-')
+        method = "#{index}_search".gsub(/-/, "-")
         @results, facets, @took =
           send(
             method.to_sym,
-            'search',
+            "search",
             params[:q],
             params[:filters],
             params[:page],
@@ -200,28 +175,28 @@ class SearchController < ApplicationController
           end
         end
       else
-        if index == 'ecommerce'
+        if index == "ecommerce"
           @results, facets, @took =
             ecommerce_search(
-              'search',
+              "search",
               params[:q],
               params[:filters],
               params[:page],
               params[:sort]
             )
-        elsif index == 'flight_data'
+        elsif index == "flights"
           @results, facets, @took =
-            flight_data_search(
-              'search',
+            flights_search(
+              "search",
               params[:q],
               params[:filters],
               params[:page],
               params[:sort]
             )
-        elsif index == 'web_logs'
+        elsif index == "logs"
           @results, facets, @took =
-            web_logs_search(
-              'search',
+            logs_search(
+              "search",
               params[:q],
               params[:filters],
               params[:page],
@@ -229,8 +204,8 @@ class SearchController < ApplicationController
             )
         else
           @results, facets, @took =
-            all_search(
-              'search',
+            public_search(
+              "search",
               params[:q],
               params[:filters],
               params[:page],
@@ -239,9 +214,7 @@ class SearchController < ApplicationController
         end
         @indices = ActiveSupport::OrderedHash.new
         repos = PUBLIC_REPOS
-        repos.each do |index|
-          @indices[index] = -1
-        end
+        repos.each { |index| @indices[index] = -1 }
       end
 
       if Rails.env.production?
@@ -250,7 +223,7 @@ class SearchController < ApplicationController
             timestamp: "#{Time.now.utc.iso8601}",
             session_id: "#{session.id}",
             user: current_user,
-            action: 'search',
+            action: "search",
             index: "#{params[:index]}",
             query: "#{params[:q]}",
             filters: "#{params[:filters]}",
@@ -263,8 +236,7 @@ class SearchController < ApplicationController
       end
     end
 
-    @count = public_count
-    @count += private_count if current_user
+    calculate_count
 
     respond_to do |format|
       format.js {}
@@ -276,32 +248,30 @@ class SearchController < ApplicationController
 
   def user_authorized?(index)
     if current_user
-      return PRIVATE_REPOS.include?(index)
+      return PRIVATE_REPOS.include?(index) || PUBLIC_REPOS.include?(index)
     else
       return PUBLIC_REPOS.include?(index)
     end
   end
 
-  def public_count
-    flights = FlightDataRepository.new
-    #orders = EcommerceOrdersRepository.new
-    logs = WebLogsRepository.new
-    flights.count + logs.count
-    #flights.count + orders.count + logs.count
+  def calculate_count
+    if current_user
+      @count = all_count
+    else
+      @count = public_count
+    end
   end
 
-  def private_count
-    #atm = ATMRepository.new
-    #canvas = CanvasRepository.new
-    #dashboard = DashboardRepository.new
-    #intranet = IntranetRepository.new
-    #flights = FlightsRepository.new
-    logs = WebLogsRepository.new
+  def public_count
+    flights = FlightsRepository.new
+    ecommerce = EcommerceRepository.new
+    logs = LogsRepository.new
+    flights.count + ecommerce.count + logs.count
+  end
+
+  def all_count
     lunch = LunchRepository.new
     people = PeopleRepository.new
-    #atm.count + canvas.count + dashboard.count + flights.count +
-      #intranet.count + lunch.count + people.count + wikipedia.count
-    #logs.count + lunch.count + people.count
-    lunch.count + people.count
+    lunch.count + people.count + public_count
   end
 end

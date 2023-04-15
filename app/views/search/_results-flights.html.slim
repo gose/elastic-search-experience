@@ -9,13 +9,13 @@ li.sr
       .ond style="float: right; font-weight: normal;"
         | #{doc['_source']['origin']}
         i.fa.fa-plane style="font-size: 1em; transform: rotate(45deg); margin: 0 13px 0 8px;"
-        | #{doc['_source']['destination']}
-      | #{doc['_source']['airline']} ##{doc['_source']['carrier']}#{doc['_source']['number']}
+        | #{doc['_source']['Dest']}
+      | #{doc['_source']['Carrier']} ##{doc['_source']['FlightNum']}
     .result-description
       span style="color: #666; font-siz: 0.8em;"
         .landed.badge style="float: right; color: white; font-size: 0.8em; font-weight: bold;"
           | Landed
-        - ts = Date.parse doc['_source']['scheduled_departure_time']
+        - ts = Date.parse doc['_source']['timestamp']
         = ts.strftime("%B %-d, %Y")
       table style="order: 1px solid #ccc; margin-top: 5px; width: 100%;"
         tr
@@ -43,7 +43,7 @@ li.sr
                 th #{doc['_source']['actual_elapsed_min']} min
               tr
                 td.mute align="right" In Air
-                th #{doc['_source']['air_time_min']} min
+                th #{Integer(doc['_source']['FlightTimeMin'])} min
               tr
                 td.mute align="right" Distance
                 th #{doc['_source']['distance_between_airports_miles']} miles
