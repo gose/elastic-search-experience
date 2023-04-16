@@ -1,6 +1,6 @@
 # Elastic Search Experience
 
-<img src="data/demo.gif" align="right" height="380" style="margin: 15px 0 15px 15px;"  alt="Screenshot"/>
+<img src="data/demo.gif" align="right" height="280" style="margin: 15px 0 15px 15px;"  alt="Screenshot"/>
 
 The Elastic Search Experience (ESE) provides an intuitive search interface for your data.  Many people know how to use a search engine, and often turn to this simple interface to begin their quest for information.  The Elastic Search Experience satisfies this need, as a powerful tool to increase productivity by making large sets of data easily accessible.
 
