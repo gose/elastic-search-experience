@@ -1,18 +1,25 @@
 # Elastic Search Experience
 
-<img src="data/screenshot.png" align="right" height="280" style="margin-top: -25px;" />
+<img src="data/demo.gif" align="right" height="380" style="margin: 15px 0 15px 15px;"  alt="Screenshot"/>
 
-The Elastic Search Experience (ESE) provides an intuitive search interface for your data.  Its goal is to bring transparency to your data through the power of search.  Many people know how to use a search engine, and often turn to this simple interface to begin their quest for information.  The Elastic Search Experience satisfies this need, as a powerful tool to increase productivity by making large sets of data easily accessible.
+The Elastic Search Experience (ESE) provides an intuitive search interface for your data.  Many people know how to use a search engine, and often turn to this simple interface to begin their quest for information.  The Elastic Search Experience satisfies this need, as a powerful tool to increase productivity by making large sets of data easily accessible.
 
-The Elastic Search Experience is a customizable application that is configured to the needs of your users.  Templates are used to customize the search results  based on the data a user is searching through.  Often times, data has to be presented in a particular way so that a user searching it can make sense of the results.  The Elastic Search Experience application is designed to be tailored towards these needs.
+The Elastic Search Experience is a customizable application that is configured to the needs of your users.  Templates are used to customize the search results  based on the data a user is searching.  Often times, data has to be presented in a particular way so that a user searching it can make sense of the results.  The Elastic Search Experience application is designed to be tailored towards these needs.
 
 It's powered by Elasticsearch, which is a mature, scalable, open source, search engine.  Elasticsearch provides a flexible way to search over a wide variety of data.  The Elastic Search Experience application sits on top of it, and provides a friendly interface any user can understand with zero training.
 
-This repository is for Search Teams looking to run a universal search interface on top of large sets of data.  It requires familiarity with Ruby on Rails to configure, customize, and run the application.  Integration points are provided to setup security, so that users can only see the search results for which they have permission.
+This repository is for Search Teams looking to run a universal search interface on top of large sets of data.  It requires familiarity with Ruby on Rails to configure, customize, and run the application.  Integration points are provided to setup security, so that users can only see the search results for which they have permission.  If your team isn't familiar with Ruby on Rails, [Elastic.co](https://www.elastic.co) provides some great [alternatives](#alternatives) that contain a similar experience.
 
-## Getting Started
+## Elastic
 
-If you'd like to run this application in your environment, you'll need to be familiar with running a Ruby on Rails applciation, along with general system knowledge.  If you or your team isn't familiar with Ruby on Rails, [Elastic.co](https://www.elastic.co) provides some great [alternatives](#alternatives) that contain a similar experience.
+This application depends on an Elastic cluster.  You can use a local instance or one running inside Elastic Cloud.
+
+Run a local Elastic cluster in Docker:
+
+- [Run Elasticsearch locally on Docker](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html)
+- [Run Kibana locally on Docker](https://www.elastic.co/guide/en/kibana/8.7/docker.html)
+
+## Setup
 
 Clone the repo to local environment:
 
@@ -29,33 +36,41 @@ $ rails credentials:edit
 Add the following contents (replacing the example values):
 
 ```yaml
-elastic_cloud:
-  cloud_id: "My_Cluster:Cloud_ID"
+elastic_local:
   user: "elastic"
-  password: "My_Password"
+  password: "xxx"
   scheme: "https"
-  host: "my-hostname.us-central1.gcp.cloud.es.io"
-  port: "9243"
+  host: "localhost"
+  port: "9200"
+
+elastic_cloud:
+  user: "elastic"
+  password: "xxx"
+  scheme: "https"
+  host: "xxx"
+  port: "443"
 
 elastic_apm:
-  secret_token: "my-apm-token"
+  secret_token: "xxx"
+  server_url: "xxx"
 
-users:
-  a-user: "my-password"
-  b-user: "my-password"
+user:
+  password: 'demo'
 ```
 
-The application comes with two built-in users `a-user` and `b-user` which you should tailor to your needs.  When deploying this application to production, using OAuth is recommended if you need to support many users.
+The application comes with a built-in `demo` user to simulate authenticated searches.  When deploying this application to production, using OAuth is recommended.
 
-The data you have in Elasticsearch can be queried via the `search_controller.rb`.  It has many `concerns` that contain the logic for the different indices you'll be querying in Elasticsearch.  For example, the `wikipedia_search.rb` concern or the `elastic_docs_search.rb` concern .  You can use those as a reference when you're ready to add your own data types from your Elasticsearch cluster.
+## Rails Query Flow
 
-Results are rendered by the document type returned from Elasticsearch, using a partial view in `app/views/search`.  Check out the partial views for Wikipedia results in `_resutls-wikipedia.html.slim` and for Elastic Docs in `_results-docs.html.slim`.  They provide a good reference for creating your own custom result reviews based on your data.
+The data you have in Elasticsearch can be queried via the `search_controller.rb`.  It has many `concerns` that contain the logic for the different indices you'll be querying in Elasticsearch.  For example, the `lunch_search.rb` concern will contain most of the Elastic domain logic.
+
+![Screenshot](data/flow.png)
+
+Results are rendered by the document type returned from Elasticsearch, using a partial view in `app/views/search`.  Check out the partial views for Lunch results in `_results-lunch.html.slim`.  It provides a good reference for creating your own custom results based on your data.
 
 ## Adding a Data Source
 
 To add a new data source to your Elastic Search Page, follow these general steps.
-
-
 
 ![Screenshot](data/steps.png)
 
