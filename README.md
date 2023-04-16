@@ -1,6 +1,6 @@
 # Elastic Search Experience
 
-<img src="data/demo.gif" align="right" height="280" style="margin: 15px 0 15px 15px;"  alt="Screenshot"/>
+<img src="data/demo.gif" align="right" width="500" style="margin: 15px;"/>
 
 The Elastic Search Experience (ESE) provides an intuitive search interface for your data.  Many people know how to use a search engine, and often turn to this simple interface to begin their quest for information.  The Elastic Search Experience satisfies this need, as a powerful tool to increase productivity by making large sets of data easily accessible.
 
@@ -64,7 +64,7 @@ The application comes with a built-in `demo` user to simulate authenticated sear
 
 The data you have in Elasticsearch can be queried via the `search_controller.rb`.  It has many `concerns` that contain the logic for the different indices you'll be querying in Elasticsearch.  For example, the `lunch_search.rb` concern will contain most of the Elastic domain logic.
 
-![Screenshot](data/flow.png)
+<img src="data/flow.png" width="800">
 
 Results are rendered by the document type returned from Elasticsearch, using a partial view in `app/views/search`.  Check out the partial views for Lunch results in `_results-lunch.html.slim`.  It provides a good reference for creating your own custom results based on your data.
 
@@ -72,7 +72,7 @@ Results are rendered by the document type returned from Elasticsearch, using a p
 
 To add a new data source to your Elastic Search Page, follow these general steps.
 
-![Screenshot](data/steps.png)
+<img src="data/steps.png" width="800">
 
 Some logs in Elastic can contain many fields.  As you think about adding a new data source to your search page, sometimes it helps to write down the specific fields from a document that you want to search or render.  This can make it easier to onboard the data source without being overwhelmed by the number of fields some data sources contain.
 
