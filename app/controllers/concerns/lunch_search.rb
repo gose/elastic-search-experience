@@ -6,7 +6,7 @@ module LunchSearch
   include Elasticsearch::DSL
 
   # type = quick, search, facet
-  def lunch_search(type, query, filters, page, sort)
+  def lunch_search(repo, type, query, filters, page, sort)
 
     filter_lookup = {}
     filter_lookup['Availability'] = 'availability.keyword'
@@ -14,8 +14,6 @@ module LunchSearch
     filter_lookup['Cuisine'] = 'cuisine_name.keyword'
     filter_lookup['Diet'] = 'diet.keyword'
     filter_lookup['Price'] = 'price'
-
-    index = LunchRepository.new
 
     # Build the Query DSL
     definition = search do
@@ -91,7 +89,7 @@ module LunchSearch
 
     # Run the actual search, and time it.
     starting = Process.clock_gettime(Process::CLOCK_MONOTONIC)
-    results = index.search(definition)
+    results = repo.search(definition)
     ending = Process.clock_gettime(Process::CLOCK_MONOTONIC)
     took_ms = (ending - starting) * 1000
 

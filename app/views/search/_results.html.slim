@@ -77,8 +77,9 @@
         | Sample Event
       pre style="color: #333; font-size: 0.8em; background-color: #eee;"
         = @doc
-    - elsif current_user || true
-      = render 'quick-links'
+    - elsif @results
+      - if @current_user
+        = render 'quick-links'
       .search-summary
         span style="float: right;"
           span style="color: #999; margin-right: 5px; font-size: 0.9em;"
@@ -112,6 +113,8 @@
           = render 'results-lunch', doc: doc, i: i
         - elsif doc['_index'] == 'people'
           = render 'results-people', doc: doc, i: i
+        - elsif doc['_index'] == 'wikipedia'
+          = render 'results-wikipedia', doc: doc, i: i
   .pagination
     - if @results && @results.total > 10
       - pages = (@results.total / 10)

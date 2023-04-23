@@ -6,18 +6,12 @@ module AllSearch
   include Elasticsearch::DSL
 
   # type = quick, search, facet
-  def all_search(type, query, filters, page, sort)
+  def all_search(repo, type, query, filters, page, sort)
 
     filter_lookup = {}
     #filter_lookup['Response Code'] = 'response.keyword'
     #filter_lookup['Machine OS'] = 'machine.os.keyword'
     #filter_lookup['Extension'] = 'extension.keyword'
-
-    if current_user
-      index = AllRepository.new
-    else
-      index = PublicRepository.new
-    end
 
     # Build the Query DSL
     definition = search do
@@ -64,7 +58,7 @@ module AllSearch
 
     # Run the actual search, and time it.
     starting = Process.clock_gettime(Process::CLOCK_MONOTONIC)
-    results = index.search(definition)
+    results = repo.search(definition)
     ending = Process.clock_gettime(Process::CLOCK_MONOTONIC)
     took_ms = (ending - starting) * 1000
 

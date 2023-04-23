@@ -34,4 +34,8 @@ class LunchRepository
   def deserialize(document)
     document #['_source']
   end
+
+  def name
+    'lunch'
+  end
 end

@@ -6,14 +6,12 @@ module LogsSearch
   include Elasticsearch::DSL
 
   # type = quick, search, facet
-  def logs_search(type, query, filters, page, sort)
+  def logs_search(repo, type, query, filters, page, sort)
 
     filter_lookup = {}
     filter_lookup['Response Code'] = 'response.keyword'
     filter_lookup['Machine OS'] = 'machine.os.keyword'
     filter_lookup['Extension'] = 'extension.keyword'
-
-    index = LogsRepository.new
 
     # Build the Query DSL
     definition = search do
@@ -82,7 +80,7 @@ module LogsSearch
 
     # Run the actual search, and time it.
     starting = Process.clock_gettime(Process::CLOCK_MONOTONIC)
-    results = index.search(definition)
+    results = repo.search(definition)
     ending = Process.clock_gettime(Process::CLOCK_MONOTONIC)
     took_ms = (ending - starting) * 1000
 

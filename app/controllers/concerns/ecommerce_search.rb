@@ -6,7 +6,7 @@ module EcommerceSearch
   include Elasticsearch::DSL
 
   # type = quick, search, facet
-  def ecommerce_search(type, query, filters, page, sort)
+  def ecommerce_search(repo, type, query, filters, page, sort)
 
     filter_lookup = {}
     filter_lookup['Currency'] = 'currency'
@@ -16,8 +16,6 @@ module EcommerceSearch
     filter_lookup['City'] = 'city'
     filter_lookup['Region'] = 'region'
     filter_lookup['Country'] = 'country'
-
-    index = EcommerceRepository.new
 
     # Build the Query DSL
     definition = search do
@@ -100,7 +98,7 @@ module EcommerceSearch
 
     # Run the actual search, and time it.
     starting = Process.clock_gettime(Process::CLOCK_MONOTONIC)
-    results = index.search(definition)
+    results = repo.search(definition)
     ending = Process.clock_gettime(Process::CLOCK_MONOTONIC)
     took_ms = (ending - starting) * 1000
 

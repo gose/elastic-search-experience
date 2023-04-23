@@ -305,7 +305,7 @@ function runSearch(href) {
       params.push("filters=" + urlParams.get("filters"));
     }
     if (index == "") {
-      index = "public";
+      index = "all";
     }
     url = "/search/" + index;
     if (params.length > 0) {

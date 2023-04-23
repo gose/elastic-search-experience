@@ -1,4 +1,4 @@
-class PublicRepository
+class WikipediaRepository
   include Elasticsearch::Persistence::Repository
   include Elasticsearch::Persistence::Repository::DSL
 
@@ -29,9 +29,13 @@ class PublicRepository
            )
   end
 
-  index_name "kibana_sample_data_logs,kibana_sample_data_flights,kibana_sample_data_ecommerce"
+  index_name "ikipedia"
 
   def deserialize(document)
     document #['_source']
+  end
+
+  def name
+    'wikipedia'
   end
 end

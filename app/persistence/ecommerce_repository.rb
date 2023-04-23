@@ -34,4 +34,8 @@ class EcommerceRepository
   def deserialize(document)
     document #['_source']
   end
+
+  def name
+    'ecommerce'
+  end
 end

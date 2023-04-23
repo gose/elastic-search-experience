@@ -6,7 +6,7 @@ module FlightsSearch
   include Elasticsearch::DSL
 
   # type = quick, search, facet
-  def flights_search(type, query, filters, page, sort)
+  def flights_search(repo, type, query, filters, page, sort)
 
     # Facets
     filter_lookup = {}
@@ -15,8 +15,6 @@ module FlightsSearch
     filter_lookup['Origin'] = 'Origin'
     filter_lookup['Destination'] = 'Dest'
     filter_lookup['Air Time'] = 'FlightTimeMin'
-
-    index = FlightsRepository.new
 
     #Elasticsearch::DSL::Search::Aggregations::DateHistogram.option_method :calendar_interval
 
@@ -97,7 +95,7 @@ module FlightsSearch
 
     # Run the actual search, and time it.
     starting = Process.clock_gettime(Process::CLOCK_MONOTONIC)
-    results = index.search(definition)
+    results = repo.search(definition)
     ending = Process.clock_gettime(Process::CLOCK_MONOTONIC)
     took_ms = (ending - starting) * 1000
 

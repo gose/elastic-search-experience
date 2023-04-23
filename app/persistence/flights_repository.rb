@@ -34,4 +34,8 @@ class FlightsRepository
   def deserialize(document)
     document #['_source']
   end
+
+  def name
+    'flights'
+  end
 end

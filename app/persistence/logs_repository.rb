@@ -34,4 +34,8 @@ class LogsRepository
   def deserialize(document)
     document #['_source']
   end
+
+  def name
+    'logs'
+  end
 end

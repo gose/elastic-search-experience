@@ -29,9 +29,13 @@ class AllRepository
            )
   end
 
-  index_name "kibana_sample_data_logs,kibana_sample_data_flights,kibana_sample_data_ecommerce,lunch,people"
+  # We define the 'index_name' on instantiation since it varies.
 
   def deserialize(document)
     document #['_source']
+  end
+
+  def name
+    'all'
   end
 end

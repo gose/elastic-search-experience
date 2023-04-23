@@ -1,0 +1,27 @@
+li.sr
+  a.result href="https://en.wikipedia.org/wiki/#{doc['_source']['title']}" style="padding: 10px; border-radius: 6px; background-color: white; border: 1px solid #ccc; color: #555;"
+    /.result-type.type-document ##{i + 1}
+    .result-title = doc['_source']['title']
+    .result-description
+      p style="color: #666; line-height: 1.2em;"
+        /- ts = Date.parse doc['_source']['timestamp']
+        /span style="color: #666; font-size: 0.8em;" = ts.strftime("%B %-d, %Y") + " - "
+        = highlight(truncate(doc['_source']['text'], length: 126))
+        - if doc['highlight']
+          - if doc['highlight']['opening_text'] && doc['highlight']['opening_text'].size > 1
+            | &nbsp; ... &nbsp;
+            = raw doc['highlight']['opening_text'][0]
+            | &nbsp; ... &nbsp;
+            = raw doc['highlight']['opening_text'][1]
+          - elsif doc['highlight']['text']
+            = raw doc['highlight']['text'][0]
+    .result-url
+      span style="font-size: 0.9em; float: right; color: #bbb;"
+        - if doc['_score']
+          div ES Score: #{sprintf("%0.2f", doc['_score'])}
+        /div Popularity: #{sprintf("%0.2f", (doc['_source']['popularity_score']*10000000))}
+      i.fa.fa-link style="margin-right: 5px;"
+      - if doc['_source']['title'].present?
+        span style="color: #3365cb;"
+          | https://en.wikipedia.org/wiki/#{doc['_source']['title'].gsub(/ /, '_')}
+  br

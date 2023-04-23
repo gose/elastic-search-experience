@@ -34,4 +34,8 @@ class PeopleRepository
   def deserialize(document)
     document #['_source']
   end
+
+  def name
+    'people'
+  end
 end

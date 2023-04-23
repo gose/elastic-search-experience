@@ -22,15 +22,11 @@
               .rect3
               .rect4
   .index-toc
-    .index-toc-header.fade-in-2 Sources:
-    - if current_user
-      = link_to 'All', search_path("all"), class: 'fade-in-0'
-      = link_to 'Logs', search_path("logs"), class: 'fade-in-1'
-      = link_to 'Flights', search_path("flights"), class: 'fade-in-2'
-      = link_to 'eCommerce', search_path("ecommerce"), class: 'fade-in-3'
-      = link_to 'Lunch', search_path(:lunch), class: 'fade-in-4'
-      = link_to 'People', search_path(:people), class: 'fade-in-5'
+    - if @repos.count > 0
+      .index-toc-header.fade-in-0 Indexes:
     - else
-      = link_to 'Logs', search_path("logs"), class: 'fade-in-0'
-      = link_to 'Flights', search_path("flights"), class: 'fade-in-1'
-      = link_to 'eCommerce', search_path("ecommerce"), class: 'fade-in-2'
+      .index-toc-header.fade-in-1
+        | No indexes detected.
+      = link_to 'Add Sample Data', 'https://www.elastic.co/guide/en/kibana/current/get-started.html#gs-get-data-into-kibana', class: 'fade-in-2'
+    - @repos.each_with_index do |(name, repo), idx|
+      = link_to name.titleize, search_path(name), class: "fade-in-#{idx}"

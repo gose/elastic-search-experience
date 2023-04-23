@@ -1,31 +1,35 @@
 require 'elasticsearch/dsl'
 
-module PeopleSearch
+module WikipediaSearch
 
   extend ActiveSupport::Concern
   include Elasticsearch::DSL
 
   # type = quick, search, facet
-  def people_search(repo, type, query, filters, page, sort)
+  def wikipedia_search(repo, type, query, filters, page, sort)
 
     filter_lookup = {}
-    filter_lookup['Location'] = 'location.keyword'
-    filter_lookup['Title'] = 'title.keyword'
+    filter_lookup['Incoming Links'] = 'incoming_links'
+    filter_lookup['Heading'] = 'heading'
+
+    Elasticsearch::DSL::Search::Aggregations::Terms.option_method :collect_mode
 
     # Build the Query DSL
     definition = search do
       if type == 'facet'
         size 0
-        aggregation :title do
+        aggregation :incoming_links do
           terms do
-            field 'title.keyword'
-            size  5
+            field        filter_lookup['Incoming Links']
+            collect_mode 'breadth_first'
+            size          5
           end
         end
-        aggregation :location do
+        aggregation :heading do
           terms do
-            field 'location.keyword'
-            size  10
+            field        filter_lookup['Heading']
+            collect_mode 'breadth_first'
+            size          5
           end
         end
       end
@@ -43,9 +47,9 @@ module PeopleSearch
           must do
             if query.present?
               multi_match do
-                query   query
-                type    "best_fields"
-                fields  ["name", "title", "location"]
+                query     query
+                type      "best_fields"
+                fields    ["title^3", "text", "opening_text^2"]
                 # fuzziness "AUTO"
               end
             else
@@ -56,9 +60,9 @@ module PeopleSearch
       end
       if type == 'search' && query.present?
         highlight fields: {
-          name: {},
           title: {},
-          location: {}
+          opening_text: {},
+          text: {}
         }
       end
     end
@@ -72,31 +76,32 @@ module PeopleSearch
     # Show the query and timing
     logger.debug definition.to_json
     if took_ms < 1000
-      logger.debug "People ES #{type.titleize} Query: " +
+      logger.debug "Wikipedia ES #{type.titleize} Query: " +
         "#{sprintf("%0.0f", took_ms)} ms 🚀".light_green
     else
-      logger.debug "People ES #{type.titleize} Query: " +
+      logger.debug "Wikipedia ES #{type.titleize} Query: " +
         "#{sprintf("%0.1f", took_ms / 1000 )} seconds 🐢".light_red
     end
 
     if type == 'facet'
       filters = ActiveSupport::OrderedHash.new
 
-      # Location Filter
-      location = ActiveSupport::OrderedHash.new
-      for term in results.response.aggregations.location.buckets.map
-        location[term[:key]] = term[:doc_count].to_s
+      # Heading Filter
+      heading = ActiveSupport::OrderedHash.new
+      for term in results.response.aggregations.heading.buckets.map
+        heading[term[:key]] = term[:doc_count].to_s
       end
-      filters["Location"] = location
+      filters["Heading"] = heading
 
-      # Title Filter
-      title = ActiveSupport::OrderedHash.new
-      for term in results.response.aggregations.title.buckets.map
-        title[term[:key]] = term[:doc_count].to_s
+      # Incoming Links Filter
+      incoming_links = ActiveSupport::OrderedHash.new
+      for term in results.response.aggregations.incoming_links.buckets.map
+        incoming_links[term[:key]] = term[:doc_count].to_s
       end
-      filters["Title"] = title
+      filters["Incoming Links"] = incoming_links
     end
 
     return results, filters, took_ms
   end
+
 end
