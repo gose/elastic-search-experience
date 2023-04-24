@@ -172,7 +172,6 @@ if parsed[:import]
         end
         results = client.bulk(index: index, body: batch_for_bulk)
         # puts JSON.pretty_generate(results)
-        puts '.'
         id = nil
       end
   end

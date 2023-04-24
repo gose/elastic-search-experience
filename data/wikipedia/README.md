@@ -19,7 +19,7 @@ usage: ./main.rb [options]
     -f, --full    Full load (default: 5 docs)
 ```
 
-It takes approximately 2 hours to ingest the 6.6 M articles from the English Wikipedia content set.
+It takes approximately 2 hours to ingest the 6.6M articles from the English Wikipedia content set.
 
 Once indexed, it will take up ~32 GB of disk in Elasticsearch.
 

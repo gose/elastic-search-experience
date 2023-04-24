@@ -29,7 +29,7 @@ class WikipediaRepository
            )
   end
 
-  index_name "ikipedia"
+  index_name "wikipedia"
 
   def deserialize(document)
     document #['_source']
