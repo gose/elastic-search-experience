@@ -4,7 +4,6 @@ require "colorize"
 require "elasticsearch"
 require "slop"
 require "openssl"
-require "json"
 
 require "/Users/gose/rails/elastic-sample/config/environment"
 
@@ -20,7 +19,7 @@ opts.bool "-d", "--delete", "Delete the index"
 opts.bool "-i", "--import", "Import the index"
 opts.bool "-s", "--status", "Get cluster status"
 opts.bool "-p", "--prod", "Use production cluster (default: local cluster)"
-opts.bool "-f", "--full", "Full load (default: 5 docs)"
+opts.bool "-f", "--full", "Full load (default: 10 docs)"
 
 begin
   parsed = opts.parse ARGV
@@ -35,15 +34,14 @@ if ARGV.length < 1
   exit
 end
 
-index = "wikipedia"
+index = "atm"
 
 client = nil
 
 if parsed[:full]
-  data_file =
-    "/Users/gose/data/wikipedia/enwiki-20230410-cirrussearch-content.json"
+  data_file = "/Users/gose/data/atm/atm.csv"
 else
-  data_file = "/Users/gose/data/wikipedia/head.json"
+  data_file = "/Users/gose/data/atm/head.csv"
 end
 
 if parsed[:prod]
@@ -76,57 +74,88 @@ if parsed[:create]
   client.indices.create index: index,
                         body: {
                           settings: {
-                            number_of_shards: 1,
+                            number_of_shards: 2,
                             number_of_replicas: 0,
                             refresh_interval: "10s"
                           },
                           mappings: {
                             dynamic: "strict",
                             properties: {
-                              title: {
-                                type: "text",
-                                fields: {
-                                  keyword: {
-                                    type: "keyword"
-                                  },
-                                  typeahead: {
-                                    type: "search_as_you_type"
-                                  }
-                                }
-                              },
                               "@timestamp": {
                                 type: "date"
                               },
-                              create_timestamp: {
-                                type: "date"
-                              },
-                              incoming_links: {
+                              atm_cross_streets: {
                                 type: "keyword"
                               },
-                              category: {
+                              "atm_city": {
                                 type: "keyword"
                               },
-                              text: {
-                                type: "text"
-                              },
-                              text_bytes: {
-                                type: "integer"
-                              },
-                              content_model: {
-                                type: "keyword"
-                              },
-                              coordinates: {
+                              atm_location: {
                                 type: "geo_point"
                               },
-                              heading: {
+                              atm_serial_no: {
                                 type: "keyword"
                               },
-                              opening_text: {
-                                type: "text"
+                              atm_id: {
+                                type: "keyword"
                               },
-                              popularity_score: {
+                              atm_network: {
+                                type: "keyword"
+                              },
+                              customer_salutation: {
+                                type: "keyword"
+                              },
+                              customer_first_name: {
+                                type: "keyword"
+                              },
+                              customer_last_name: {
+                                type: "keyword"
+                              },
+                              customer_soc_sec: {
+                                type: "keyword"
+                              },
+                              customer_address: {
+                                type: "keyword"
+                              },
+                              customer_city: {
+                                type: "keyword"
+                              },
+                              customer_state: {
+                                type: "keyword"
+                              },
+                              customer_state_abbr: {
+                                type: "keyword"
+                              },
+                              customer_zip: {
+                                type: "keyword"
+                              },
+                              customer_location: {
+                                type: "geo_point"
+                              },
+                              customer_phone: {
+                                type: "keyword"
+                              },
+                              customer_plan: {
+                                type: "keyword"
+                              },
+                              card_number: {
+                                type: "keyword"
+                              },
+                              card_last_four: {
+                                type: "keyword"
+                              },
+                              card_expiration_date: {
+                                type: "keyword"
+                              },
+                              card_type: {
+                                type: "keyword"
+                              },
+                              amount: {
                                 type: "float"
-                              }
+                              },
+                              operation: {
+                                type: "keyword"
+                              },
                             }
                           }
                         }
@@ -140,39 +169,40 @@ if parsed[:import]
       .lazy
       .each_slice(100) do |lines|
         batch_for_bulk = []
-        id = nil
         for line in lines
-          if line =~ /^{"index":{"_type":"_doc"/
-            parsed = JSON.parse(line)
-            id = parsed["index"]["_id"]
-            next
-          end
-          parsed = JSON.parse(line)
-          coordinates = nil
-          if parsed["coordinates"] && parsed["coordinates"].length > 0
-            coordinates = parsed["coordinates"][0]["coord"]
-            # "coord":{"lon":-103.6211,"lat":48.1429}
-          end
-          batch_for_bulk.push({ index: { _index: index, _id: id } })
+          cols = line.split('||')
+          batch_for_bulk.push({ index: { _index: index } })
           batch_for_bulk.push(
             {
-              title: parsed["title"],
-              "@timestamp": parsed["timestamp"],
-              create_timestamp: parsed["create_timestamp"],
-              incoming_links: parsed["incoming_links"],
-              category: parsed["category"],
-              text: parsed["text"],
-              text_bytes: parsed["text_bytes"],
-              content_model: parsed["content_model"],
-              coordinates: coordinates,
-              heading: parsed["heading"],
-              opening_text: parsed["opening_text"],
-              popularity_score: parsed["popularity_score"]
+              "@timestamp": cols[0],
+              atm_cross_streets: cols[1],
+              atm_city: cols[2],
+              atm_location: {"lat":cols[3], "lon":cols[4]},
+              atm_serial_no: cols[5],
+              atm_id: cols[6],
+              atm_network: cols[7],
+              customer_salutation: cols[8],
+              customer_first_name: cols[9],
+              customer_last_name: cols[10],
+              customer_soc_sec: cols[17],
+              customer_address: cols[18],
+              customer_city: cols[19],
+              customer_state: cols[20],
+              customer_state_abbr: cols[21],
+              customer_zip: cols[22],
+              customer_phone: cols[11],
+              customer_plan: cols[12],
+              card_number: cols[13],
+              card_last_four: cols[14],
+              card_expiration_date: cols[15],
+              card_type: cols[16],
+              amount: rand(20.0...10000.0).round(2),
+              operation: ["DEP", "CASH"].sample
             }
           )
         end
         results = client.bulk(index: index, body: batch_for_bulk)
-        # puts JSON.pretty_generate(results)
+        puts JSON.pretty_generate(results)
         id = nil
       end
   end

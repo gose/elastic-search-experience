@@ -3,6 +3,7 @@ class SearchController < ApplicationController
   before_action :init_repos
 
   include AllSearch
+  include ATMSearch
   include EcommerceSearch
   include FlightsSearch
   include LogsSearch
@@ -182,7 +183,7 @@ class SearchController < ApplicationController
     @repos['all'] = nil
 
     public_repos = [FlightsRepository, EcommerceRepository, LogsRepository]
-    private_repos = [LunchRepository, PeopleRepository, WikipediaRepository]
+    private_repos = [LunchRepository, PeopleRepository, ATMRepository, WikipediaRepository]
 
     index_names = []
 

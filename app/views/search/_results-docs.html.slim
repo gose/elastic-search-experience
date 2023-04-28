@@ -1,0 +1,43 @@
+li.sr
+  a.result href="#{doc['_source']['url']}" style="padding: 10px; border-radius: 6px; background-color: white; border: 1px solid #ccc; color: #555;"
+    /.result-type.type-document ##{i + 1}
+    .result-title
+      div style="float: right; color: white; font-size: 0.8em; font-weight: normal; text-align: right;"
+        // Category
+        - if doc['_source']['category'] == "Elasticsearch"
+          .badge style="background-color: #25BBB0; text-align: center; font-size: 0.8em; font-weight: normal;"
+            | Elasticsearch
+        - elsif doc['_source']['category'] == "Kibana"
+          .badge style="background-color: #EEC30C; text-align: center; font-size: 0.8em; font-weight: normal;"
+            | Kibana
+        - else
+          .badge style="background-color: #93C83E; text-align: center; font-size: 0.8em; font-weight: normal;"
+            = doc['_source']['category']
+        // Section
+        - if doc['_source']['section'].present?
+          .badge style="background-color: #bbb; display: inline-block; margin-top: 5px; font-size: 0.8em; font-weight: normal;"
+            = doc['_source']['section']
+      = doc['_source']['title']
+    .result-description
+      p style="color: #666; line-height: 1.2em;"
+        /span style="color: #666; font-size: 0.8em;" = doc['_source']['version'] + " - "
+        - if doc['highlight']
+          = highlight(truncate(doc['_source']['content'], length: 126))
+          - if doc['highlight']['content'] && doc['highlight']['content'].size > 1
+            | &nbsp; ... &nbsp;
+            = raw doc['highlight']['content'][0]
+            | &nbsp; ... &nbsp;
+            = raw doc['highlight']['content'][1]
+          - elsif doc['highlight']['content']
+            = raw doc['highlight']['content'][0]
+        - else
+          = highlight(truncate(doc['_source']['content'], length: 256))
+
+    .result-url
+      span style="font-size: 0.9em; float: right; color: #bbb;"
+        - if doc['_score']
+          div ES Score: #{sprintf("%0.2f", doc['_score'])}
+      i.fa.fa-link
+        span style="font-family: sans-serif; font-size: 1.1em;"
+          |  #{middle_truncate doc['_source']['url']}
+  br

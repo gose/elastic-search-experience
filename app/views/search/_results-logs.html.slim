@@ -32,7 +32,7 @@ li.sr
                 | #{fields[7]}
       span style="font-size: 1em; line-height: 1.2em;"
         = highlight(doc['_source']['message'])
-    .result-url
+    /.result-url
       span style="font-size: 0.9em; float: right; color: #bbb;"
         - if doc['_score']
           div ES Score: #{sprintf("%0.2f", doc['_score'])}

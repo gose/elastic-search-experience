@@ -1,0 +1,72 @@
+li.sr
+  .result style="padding: 10px; border-radius: 6px; background-color: white; border: 1px solid #ccc; color: #555;"
+    .result-title
+      .ond style="float: right; font-weight: normal; font-size: 1.3em;"
+        - if doc['_source']['card_type'] == "visa"
+          i.fa.fa-cc-visa style="font-size: 1em; margin: 0 0 0 8px;"
+        - elsif doc['_source']['card_type'] == "discover"
+          i.fa.fa-cc-discover style="font-size: 1em; margin: 0 0 0 8px;"
+        - elsif doc['_source']['card_type'] == "mastercard"
+          i.fa.fa-cc-mastercard style="font-size: 1em; margin: 0 0 0 8px;"
+        - else
+          i.fa.fa-credit-card style="font-size: 1em; margin: 0 0 0 8px;"
+      | #{highlight(doc['_source']['customer_first_name'])} #{highlight(doc['_source']['customer_last_name'])}
+      span style="font-weight: normal;"
+        - if doc['_source']['operation'] == 'CASH'
+          |  withdrew
+        - elsif doc['_source']['operation'] == 'DEP'
+          |  deposited
+        - else
+          |  checked balance
+      |  #{number_to_currency doc['_source']['amount']}
+    .result-description
+      span style="color: #666; font-siz: 0.8em;"
+        div style="float; right;"
+          div style="float: right; color: white; font-size: 0.8em;"
+            - if doc['_source']['customer_plan'] == "Diamond"
+              .badge style="background-color: #000;"
+                | Diamond
+            - elsif doc['_source']['customer_plan'] == "Gold"
+              .badge style="background-color: #D4A600;"
+                | Gold
+            - else
+              .badge style="background-color: #aaa;"
+                | Silver
+        - ts = Date.parse doc['_source']['@timestamp']
+        = ts.strftime("%B %-d, %Y at %l:%M %p")
+      table style="order: 1px solid #ccc; margin-top: 5px; width: 100%;"
+        tr
+          td
+            table style="order: 1px solid #ccc; margin-top: 5px; width: 100%;"
+              tr
+                td.mute align="right" ATM ID
+                th = highlight(doc['_source']['atm_id'])
+              tr
+                td.mute align="right" Location
+                th 
+                  = highlight doc['_source']['atm_cross_streets']
+              tr
+                td.mute align="right" Network
+                th = highlight(doc['_source']['atm_network'])
+              tr
+                td.mute align="right" Serial No
+                th = highlight(doc['_source']['atm_serial_no'].upcase)
+          td
+            table style="order: 1px solid #ccc; margin-top: 5px; width: 100%;"
+              tr
+                td.mute align="right" Card Last Four
+                th  #{doc['_source']['card_last_four']}
+              tr
+                td.mute align="right" Phone
+                th  #{doc['_source']['customer_phone']}
+              tr
+                td.mute align="right" Address
+                th  #{doc['_source']['customer_address']}
+              tr
+                td.mute align="right" City
+                th  #{doc['_source']['customer_city']}
+    /.result-url
+      span style="font-size: 0.9em; float: right; color: #bbb; position: relative; top: -10px;"
+        - if doc['_score']
+          div ES Score: #{sprintf("%0.2f", doc['_score'])}
+  br

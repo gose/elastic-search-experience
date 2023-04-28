@@ -113,6 +113,8 @@
           = render 'results-lunch', doc: doc, i: i
         - elsif doc['_index'] == 'people'
           = render 'results-people', doc: doc, i: i
+        - elsif doc['_index'] == 'atm'
+          = render 'results-atm', doc: doc, i: i
         - elsif doc['_index'] == 'wikipedia'
           = render 'results-wikipedia', doc: doc, i: i
   .pagination

@@ -137,7 +137,7 @@ li.sr
     .result-url
       span style="font-size: 0.9em; float: right; color: #bbb; position: relative; top: -10px;"
         /div ID: #{doc['_id']}
-        - if doc['_score']
+        /- if doc['_score']
           div ES Score: #{sprintf("%0.2f", doc['_score'])}
         /div Popularity: #{sprintf("%0.2f", (doc['_source']['popularity_score']*10000000))}
       /i.fa.fa-link
