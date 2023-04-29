@@ -53,7 +53,7 @@ module SchemaSearch
                 query   query
                 type    "best_fields"
                 fields  ["Field", "Field_Set", "Type", "Example", "Description"]
-                # fuzziness "AUTO"
+                fuzziness "AUTO"
               end
             else
               match_all

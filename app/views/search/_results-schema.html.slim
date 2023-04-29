@@ -1,10 +1,42 @@
 li.sr
-  table.table.result
-    tr
-      td style="width: 100px;" = doc['_source']['Field']
-      td style="width: 100px;" = doc['_source']['Field_Set']
-      td style="width: 100px;" = doc['_source']['Example']
-      td = doc['_source']['Description']
+  .result style="padding-bottom: 0;" href="#"
+    /.result-title
+      .float-end.fw-normal.fs-6
+        span.me-2 style="color: #ccc;" Level
+        = doc['_source']['Level']
+      = doc['_source']['Field']
+      span.ms-2 style="font-weight: normal; font-size: 0.8em;" Field
+    .result-description
+      table.table
+        /tr
+          td.mute width="300" Field Name
+          td.mute width="150" Field Level
+          td.mute width="150" Field Set
+          td.mute.text-end ECS Version
+        tr
+          td width="300"
+            span.badge.bg-secondary.fw-normal style="font-size: 1em;" = highlight doc['_source']['Field']
+            span.mute.ms-2 style="font-size: 0.8em; opacity: 0.2;" Name
+          td.d-none.d-md-table-cell
+            = highlight doc['_source']['Level']
+            span.mute.ms-2 style="font-size: 0.8em; opacity: 0.2;" Level
+          td.d-none.d-md-table-cell
+            = highlight doc['_source']['Field_Set']
+            span.mute.ms-2 style="font-size: 0.8em; opacity: 0.2;" Field Set
+          td.text-end.d-none.d-md-table-cell
+            = doc['_source']['ECS_Version']
+            span.mute.ms-2 style="font-size: 0.8em; opacity: 0.2;" ECS Version
+        tr
+          td colspan="4"
+            = highlight doc['_source']['Description']
+            span.mute.ms-2.loat-end style="font-size: 0.8em; opacity: 0.2;" Description
+        tr
+          td colspan="4"
+            - if doc['_source']['Example'].present?
+              = highlight doc['_source']['Example']
+            - else
+              | None
+            span.mute.ms-2.loat-end style="font-size: 0.8em; opacity: 0.2;" Example
 
 /li.sr
   .result href="/" style="padding: 10px; border-radius: 6px; background-color: white; border: 1px solid #ccc; color: #555;"
@@ -24,4 +56,3 @@ li.sr
       /i.bi.bi-link
         span
           |  #{doc['_source']['host']}#{doc['_source']['request']}
-  br
