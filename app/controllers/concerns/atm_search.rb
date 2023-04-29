@@ -94,7 +94,7 @@ module ATMSearch
               multi_match do
                 query   query
                 type    "best_fields"
-                fields  ["atm_location", "atm_city", "customer_first_name", "customer_last_name", "customer_phone"]
+                fields  ["atm_city", "customer_first_name", "customer_last_name", "customer_phone"]
                 # fuzziness "AUTO"
               end
             else
@@ -105,8 +105,6 @@ module ATMSearch
       end
       if type == 'search' && query.present?
         highlight fields: {
-          atm_location: {},
-          atm_city: {},
           customer_first_name: {},
           customer_last_name: {},
           customer_phone: {}

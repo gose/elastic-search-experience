@@ -9,6 +9,7 @@ class SearchController < ApplicationController
   include LogsSearch
   include LunchSearch
   include PeopleSearch
+  include SchemaSearch
   include WikipediaSearch
 
   def index
@@ -182,7 +183,7 @@ class SearchController < ApplicationController
     @repos = ActiveSupport::OrderedHash.new
     @repos['all'] = nil
 
-    public_repos = [FlightsRepository, EcommerceRepository, LogsRepository]
+    public_repos = [FlightsRepository, EcommerceRepository, LogsRepository, SchemaRepository]
     private_repos = [LunchRepository, PeopleRepository, ATMRepository, WikipediaRepository]
 
     index_names = []
@@ -217,7 +218,7 @@ class SearchController < ApplicationController
   end
 
   def user_authorized?(index)
-    current_user || index == 'logs' || index == 'flights' || index == 'ecommerce'
+    current_user || index == 'logs' || index == 'flights' || index == 'ecommerce' || index == 'schema'
   end
 
   def calculate_count

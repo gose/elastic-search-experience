@@ -2,13 +2,10 @@ doctype html
 html
   head
     title Elastic Search
-    link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"
-
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
     = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
     = csrf_meta_tags
     = csp_meta_tag
-
     script src="https://unpkg.com/@elastic/apm-rum/dist/bundles/elastic-apm-rum.umd.min.js" crossorigin
     javascript:
       elasticApm.init()
@@ -32,18 +29,18 @@ html
           nav.utility-nav
             = link_to '#', class: "open-menu"
               span.app-icon style="font-size: 1.2em; opacity: 0.6;"
-                i.fa.fa-th
+                i.bi.bi-grid-3x3-gap
             a.contact-support-control data-open-support="" href=""
               span.app-icon style="font-size: 1.3em; opacity: 0.8;"
-                i.fa.fa-commenting-o style="position: relative; left: 1px; top: -1px;"
+                i.bi.bi-chat-dots
             - if session[:user]
               = link_to logout_path, data: { confirm: 'Logout?' }
                 span.app-icon style="font-size: 1.3em; opacity: 0.6; margin-left: 10px;"
-                  i.fa.fa-sign-out
+                  i.bi.bi-box-arrow-right
             - else
               = link_to login_path
                 span.app-icon style="font-size: 1.3em; opacity: 0.6; margin-left: 10px;"
-                  i.fa.fa-user-circle-o
+                  i.bi.bi-person-circle
       main.view-container
         .view-content
           = yield

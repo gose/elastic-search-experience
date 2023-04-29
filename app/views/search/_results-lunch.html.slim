@@ -13,7 +13,7 @@ li.sr
         - if doc['_source']['availability'].include? Time.now.strftime('%A')
           span style="color: green" Available Today
         - else
-          span style="olor: red" Unavailable
+          span style="olor: red" Not Available Today
       div.mute 
         = highlight(doc['_source']['diet'])
   br

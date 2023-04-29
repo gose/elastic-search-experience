@@ -4,11 +4,11 @@ li.sr
     /div style="width: 100px; height: 50px; float: right;"
       .plane
         .path
-          i.fa.fa-plane style="font-size: 1.2em;"
+          i.bi.bi-airplane style="font-size: 1.2em;"
     .result-title
       .ond style="float: right; font-weight: normal;"
         | #{doc['_source']['origin']}
-        i.fa.fa-plane style="font-size: 1em; transform: rotate(45deg); margin: 0 13px 0 8px;"
+        i.bi.bi-airplane style="font-size: 1em; transform: rotate(45deg); margin: 0 13px 0 8px;"
         | #{doc['_source']['Dest']}
       | #{doc['_source']['Carrier']} ##{doc['_source']['FlightNum']}
     .result-description
@@ -140,7 +140,7 @@ li.sr
         /- if doc['_score']
           div ES Score: #{sprintf("%0.2f", doc['_score'])}
         /div Popularity: #{sprintf("%0.2f", (doc['_source']['popularity_score']*10000000))}
-      /i.fa.fa-link
+      /i.bi.bi-link
         span
           |  https://en.wikipedia.org/wiki/#{doc['_source']['title'].gsub(/ /, '_')}
   br

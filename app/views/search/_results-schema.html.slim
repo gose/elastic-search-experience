@@ -1,0 +1,27 @@
+li.sr
+  table.table.result
+    tr
+      td style="width: 100px;" = doc['_source']['Field']
+      td style="width: 100px;" = doc['_source']['Field_Set']
+      td style="width: 100px;" = doc['_source']['Example']
+      td = doc['_source']['Description']
+
+/li.sr
+  .result href="/" style="padding: 10px; border-radius: 6px; background-color: white; border: 1px solid #ccc; color: #555;"
+    /.result-type.type-document ##{i + 1}
+    /.result-title style="font-weight: normal; font-size: 1.0em; color: #666;" = doc['_source']['message']
+    .result-description style="margin-top: 0;"
+      div style="border-bottom: 1px solid #ccc; margin-bottom: 10px;"
+        table style="width: 100%;"
+          tr
+            td = doc['_source']['Field']
+      span style="font-size: 1em; line-height: 1.2em;"
+        = highlight(doc['_source']['Field'])
+    /.result-url
+      span style="font-size: 0.9em; float: right; color: #bbb;"
+        - if doc['_score']
+          div ES Score: #{sprintf("%0.2f", doc['_score'])}
+      /i.bi.bi-link
+        span
+          |  #{doc['_source']['host']}#{doc['_source']['request']}
+  br

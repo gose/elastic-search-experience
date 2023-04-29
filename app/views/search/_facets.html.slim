@@ -3,19 +3,19 @@
   .facet-container.control-type
     .facet-header
       span.facet-title #{name}
-    .facet-options
+    .facet-options.lh-sm
       - selected_facet_value = facet_selected(name)
       - if selected_facet_value.present?
-        .facet-option.selected
+        .facet-option.selected.lh-sm
           .facet-label style="display: inline;"
             | #{selected_facet_value}
             = link_to search_path(params[:index], q: params[:q], filters: remove_filter(name, selected_facet_value)), class: "facet-label", style: "color: #EF5098; display: inline; margin-left: 8px; float: righ;"
-              i.fa.fa-close
+              i.bi.bi-x-circle
       - else
         - value.each_with_index do |term, i|
           /.facet-option.selected data-type="all" 
           - if term[0].present?
-            .facet-option
+            .facet-option.lh-sm
               = link_to search_path(params[:index], q: params[:q], filters: add_filter(name, term[0])), class: 'facet-label', style: "display: inline;"
                 | #{term[0]}
                 small style="position: relative; top: -1px; margin-left: 3px;"

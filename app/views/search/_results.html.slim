@@ -5,7 +5,7 @@
     .facet-container.control-type
       .facet-header
         span.facet-title Source
-      .facet-options.index-counts
+      .facet-options.index-counts.lh-sm
         - @indices.each do |term|
           .facet-option class=('selected' if params[:index] == term[0])
             = link_to search_path(term[0], q: params[:q]), class: 'facet-label'
@@ -24,7 +24,7 @@
     .facet-container.control-sort
       .facet-header
         span.facet-title Sort by
-      .facet-options
+      .facet-options.lh-sm
         .facet-option.Xselected
           span.facet-label Relevance
         .facet-option
@@ -66,12 +66,12 @@
               td.mute style="font-size: 0.9em;" = doc[:last_seen]
               td.ctr style="font-size: 0.7em;"
                 = link_to search_path("events", {"q" => "ea06a14d-625a-4507-af9b-b1f959db2185"})
-                  i.fa.fa-file-text-o
+                  i.bi.bi-file-earmark-text
               td.ctr
                 - if doc[:indexed]
-                  i.fa.fa-check-square-o style="color: green;"
+                  i.bi.bi-check-square style="color: green;"
                 - else
-                  i.fa.fa-square-o
+                  i.bi.bi-square
     - elsif params[:q] == "ea06a14d-625a-4507-af9b-b1f959db2185"
       .search-summary
         | Sample Event
@@ -109,14 +109,16 @@
           = render 'results-ecommerce', doc: doc, i: i
         - elsif doc['_index'] == 'kibana_sample_data_flights'
           = render 'results-flights', doc: doc, i: i
+        - elsif doc['_index'] == 'atm'
+          = render 'results-atm', doc: doc, i: i
         - elsif doc['_index'] == 'lunch'
           = render 'results-lunch', doc: doc, i: i
         - elsif doc['_index'] == 'people'
           = render 'results-people', doc: doc, i: i
-        - elsif doc['_index'] == 'atm'
-          = render 'results-atm', doc: doc, i: i
         - elsif doc['_index'] == 'wikipedia'
           = render 'results-wikipedia', doc: doc, i: i
+        - else
+          = render "results-template", doc: doc, i: i
   .pagination
     - if @results && @results.total > 10
       - pages = (@results.total / 10)

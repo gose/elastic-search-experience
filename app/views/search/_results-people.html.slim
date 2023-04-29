@@ -13,12 +13,12 @@ li.sr
           td style="font-size: 1.1em; font-weight: bold; width: 50%;"
             = highlight(doc['_source']['title'])
           td style="color: #18A8E0;"
-            i.fa.fa-phone style="font-size: 1em;"
+            i.bi.bi-telephone-fill style="font-size: 1em;"
             | x#{rand(1000...9999)}
         tr
           td = highlight(doc['_source']['location'])
           td style="color: #18A8E0;"
-            i.fa.fa-envelope
+            i.bi.bi-envelope-fill
             - first, last = doc['_source']['name'].downcase.split
             | #{first[0]}.#{last}@corp-intranet.com
   br

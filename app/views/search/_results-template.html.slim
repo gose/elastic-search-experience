@@ -1,0 +1,17 @@
+li.sr
+  .result style="padding: 10px; border-radius: 6px; background-color: white; border: 1px solid #ccc; color: #555;"
+    .result-title
+      | Missing template
+    .result-description
+      dl
+        dt Index
+        dd = doc['_index']
+        dt Doc ID
+        dd = doc['_id']
+        dt Template
+        dd = markdown 'Copy `_results-template.html.slim` to get started'
+    .result-url
+      /span style="font-size: 0.9em; float: right; color: #bbb; position: relative; top: -10px;"
+        - if doc['_score']
+          div ES Score: #{sprintf("%0.2f", doc['_score'])}
+  br

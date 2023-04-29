@@ -21,6 +21,7 @@ gem 'slim'
 # gem 'addressable'
 gem 'colorize'
 # gem 'omniauth-google-oauth2'
+gem "redcarpet", ">= 3.5.1"
 
 # Elasticsearch
 gem 'elasticsearch-rails'

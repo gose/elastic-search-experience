@@ -20,7 +20,7 @@ li.sr
         - if doc['_score']
           div ES Score: #{sprintf("%0.2f", doc['_score'])}
         /div Popularity: #{sprintf("%0.2f", (doc['_source']['popularity_score']*10000000))}
-      i.fa.fa-link style="margin-right: 5px;"
+      i.bi.bi-link-45deg
       - if doc['_source']['title'].present?
         span style="color: #3365cb;"
           | https://en.wikipedia.org/wiki/#{doc['_source']['title'].gsub(/ /, '_')}
