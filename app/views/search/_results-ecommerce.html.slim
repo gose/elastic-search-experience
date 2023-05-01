@@ -1,15 +1,87 @@
 li.sr
   .result style="padding: 10px; border-radius: 6px; background-color: white; border: 1px solid #ccc; color: #555;"
-    .result-description style="margin-top: 0;"
-      div style="border-bottom: 1px solid #ccc; margin-bottom: 10px;"
-        = highlight(doc['_source']['order_id'])
-      span style="font-size: 1em; line-height: 1.2em;"
-        = highlight(doc['_source']['customer_full_name'])
-    .result-url
-      span style="font-size: 0.9em; float: right; color: #bbb;"
+    .result-title style="font-weight: normal;"
+      .ond style="float: right; font-weight: normal; font-size: 1.2em;"
+        i.bi.bi-shop-window.me-2 style="font-size: 1em;"
+        /span style="float: right; color: white; font-size: 0.8em;"
+          - if doc['_source']['customer_plan'] == "Diamond"
+            .badge.ms-1 style="background-color: #000;"
+              | Diamond
+          - elsif doc['_source']['customer_plan'] == "Gold"
+            .badge.ms-1 style="background-color: #D4A600;"
+              | Gold
+          - else
+            .badge.ms-1 style="background-color: #aaa;"
+              | Silver
+        /- if doc['_source']['card_type'] == "visa"
+          i.bi.bi-credit-card style="font-size: 1em; margin: 0 0 0 8px;"
+        /- elsif doc['_source']['card_type'] == "discover"
+          i.bi.bi-credit-card-2-back-fill style="font-size: 1em; margin: 0 0 0 8px;"
+        /- elsif doc['_source']['card_type'] == "mastercard"
+          i.bi.bi-credit-card-2-front style="font-size: 1em; margin: 0 0 0 8px;"
+        /- else
+          i.bi.bi-credit-card-fill style="font-size: 1em; margin: 0 0 0 8px;"
+      => highlight(doc['_source']['customer_full_name'])
+      | purchased
+      =<> pluralize(doc['_source']['total_quantity'], 'item')
+      | on
+      =< doc['_source']['day_of_week']
+      | ,
+      - ts = DateTime.parse doc['_source']['order_date']
+      =< ts.strftime("%b %d, %Y")
+    .result-description
+      table.table.table-sm.table-borderless
+        tr
+          td.mute align="right"
+            | Customer
+          td
+            i.bi.bi-person-circle.me-2 style="font-size: 1em;"
+            = highlight(doc['_source']['customer_full_name'])
+          td.mute align="right"
+            | Username
+          td
+            /i.bi.bi-box-arrow-in-right.me-2 style="font-size: 1em;"
+            span.ecs_badge = highlight doc['_source']['user']
+        tr
+          td.mute align="right"
+            | Email
+          td
+            i.bi.bi-envelope.me-2 style="font-size: 1em;"
+            = highlight(doc['_source']['email'])
+          td.mute align="right"
+            | Action
+          td
+            i.bi.bi-basket.me-2 style="font-size: 1em;"
+            = doc['_source']['type'].titleize
+        - for product in doc['_source']['products']
+          tr
+            td.mute align="right"
+              | Product
+            td
+              i.bi.bi-cart.me-2 style="font-size: 1em;"
+              = highlight(product['product_name'])
+            td.mute align="right"
+              | Qty
+              => product['quantity']
+            td
+              i.bi.bi-box-seam.me-2 style="font-size: 1em;"
+              /=> product['quantity']
+              | @
+              =< number_to_currency product['taxful_price'], unit: '€'
+        tr
+          - total = doc['_source']['taxful_total_price'].to_f
+          td.mute align="right"
+            | Subtotal
+          td style="border-top: 1px solid #ccc;"
+            /i.bi.bi-envelope.me-2 style="font-size: 1em;"
+            = number_to_currency (total * 0.9).round(2), unit: '€'
+          td.mute style="border-top: 1px solid #ccc;" align="right"
+            | Total
+          td style="border-top: 1px solid #ccc;"
+            /i.bi.bi-currency-euro.me-2 style="font-size: 1em;"
+            = number_to_currency total, unit: '€'
+    /.result-url
+      span style="font-size: 0.9em; float: right; color: #bbb; position: relative; top: -10px;"
         - if doc['_score']
           div ES Score: #{sprintf("%0.2f", doc['_score'])}
-      /i.bi.bi-link
-        span
-          |  #{doc['_source']['host']}#{doc['_source']['request']}
   br

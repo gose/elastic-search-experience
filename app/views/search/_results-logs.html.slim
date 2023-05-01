@@ -7,19 +7,23 @@ li.sr
         - fields = doc['_source']['message'].split
         table style="width: 100%;"
           tr
-            td style="font-size: 0.8em;"
+            td style="font-size: 0.8em; padding-bottom: 5px;"
               - if doc['_source']['message'] =~ /Firefox/
-                img src="#{asset_path 'firefox.png'}" width="25" height="25" style="display: inline-block;"
-                div style="display: inline-block; position: relative; top: -5px; left: 5px; font-weight: bold; color: #999;"
+                img src="#{asset_path 'firefox.png'}" width="25" style="display: inline-block;"
+                span.ms-1 style="font-weight: bold; color: #999;"
                   |  Firefox
               - elsif doc['_source']['message'] =~ /Safari/
                 img src="#{asset_path 'safari.png'}" width="25" height="25" style="display: inline-block;"
-                div style="display: inline-block; position: relative; top: -5px; left: 5px; font-weight: bold; color: #999;"
+                span.ms-1 style="font-weight: bold; color: #999;"
                   |  Safari
               - elsif doc['_source']['message'] =~ /Chrome/
                 img src="#{asset_path 'chrome.png'}" width="25" height="25" style="display: inline-block;"
-                div style="display: inline-block; position: relative; top: -5px; left: 5px; font-weight: bold; color: #999;"
+                span.ms-1 style="font-weight: bold; color: #999;"
                   |  Chrome
+              - elsif doc['_source']['message'] =~ /MSIE/
+                img src="#{asset_path 'edge.png'}" width="25" height="25" style="display: inline-block;"
+                span.ms-1 style="font-weight: bold; color: #999;"
+                  | Edge
             td &nbsp;
             td align="right" width="20"
               - color = "25BBB0"

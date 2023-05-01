@@ -29,7 +29,7 @@ module ApplicationHelper
   end
 
   def highlight(string)
-    return if string.blank?
+    return "" unless string.present?
     return string if params[:q].blank?
 
     if params[:q] =~ /:/
@@ -39,6 +39,11 @@ module ApplicationHelper
       else
         raw string
       end
+    elsif params[:q].split.count > 1
+      params[:q].split do |token|
+        string.gsub!(/(#{token})/i, '<em>\1</em>')
+      end
+      raw string
     else
       raw string.to_s.gsub(/(#{params[:q]})/i, '<em>\1</em>')
     end
