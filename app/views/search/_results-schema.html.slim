@@ -7,36 +7,36 @@ li.sr
       = doc['_source']['Field']
       span.ms-2 style="font-weight: normal; font-size: 0.8em;" Field
     .result-description
-      table.table
+      table.table.table-sm.table-borderless
         /tr
           td.mute width="300" Field Name
           td.mute width="150" Field Level
           td.mute width="150" Field Set
           td.mute.text-end ECS Version
         tr
-          td width="300"
-            span.badge.bg-secondary.fw-normal style="font-size: 1em;" = highlight doc['_source']['Field']
+          td
+            span.ecs_badge = highlight doc['_source']['Field']
             span.mute.ms-2 style="font-size: 0.8em; opacity: 0.2;" Name
-          td.d-none.d-md-table-cell
-            = highlight doc['_source']['Level']
-            span.mute.ms-2 style="font-size: 0.8em; opacity: 0.2;" Level
-          td.d-none.d-md-table-cell
-            = highlight doc['_source']['Field_Set']
-            span.mute.ms-2 style="font-size: 0.8em; opacity: 0.2;" Field Set
           td.text-end.d-none.d-md-table-cell
-            = doc['_source']['ECS_Version']
-            span.mute.ms-2 style="font-size: 0.8em; opacity: 0.2;" ECS Version
+            span.mute.me-2 style="font-size: 0.8em; opacity: 0.2;" Level
+            span.mute style="font-size: 0.9em; opacity: 0.4;" = highlight doc['_source']['Level']
         tr
-          td colspan="4"
+          td
             = highlight doc['_source']['Description']
             span.mute.ms-2.loat-end style="font-size: 0.8em; opacity: 0.2;" Description
+          td.text-end.d-none.d-md-table-cell
+            span.mute.me-2 style="font-size: 0.8em; opacity: 0.2;" Field Set
+            span.mute style="font-size: 0.9em; opacity: 0.4;" = highlight doc['_source']['Field_Set']
         tr
-          td colspan="4"
+          td
             - if doc['_source']['Example'].present?
               = highlight doc['_source']['Example']
             - else
               | None
             span.mute.ms-2.loat-end style="font-size: 0.8em; opacity: 0.2;" Example
+          td.text-end.d-none.d-md-table-cell
+            span.mute.me-2 style="font-size: 0.8em; opacity: 0.2;" ECS Version
+            span.mute style="font-size: 0.9em; opacity: 0.4;" = doc['_source']['ECS_Version']
 
 /li.sr
   .result href="/" style="padding: 10px; border-radius: 6px; background-color: white; border: 1px solid #ccc; color: #555;"

@@ -73,6 +73,18 @@ table.data-sources {
   }
 }
 
+.ecs_badge {
+  border: 1px solid #25BBB1;
+  border-color: rgb(233, 237, 242);
+  background-color: rgb(249, 250, 251);
+  border-radius: 3px;
+  padding: 1px 5px;
+  font-size: 1em;
+  color: #1D928A;
+  font-weight: 500;
+  font-family: Menlo, Monaco;
+}
+
 .red {
   border: 3px solid red;
 }
