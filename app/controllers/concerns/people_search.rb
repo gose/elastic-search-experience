@@ -45,7 +45,7 @@ module PeopleSearch
               multi_match do
                 query   query
                 type    "best_fields"
-                fields  ["name", "title", "location"]
+                fields  ["customer_full_name", "title", "location"]
                 # fuzziness "AUTO"
               end
             else
@@ -56,7 +56,7 @@ module PeopleSearch
       end
       if type == 'search' && query.present?
         highlight fields: {
-          name: {},
+          customer_full_name: {},
           title: {},
           location: {}
         }

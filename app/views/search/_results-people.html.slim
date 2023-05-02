@@ -8,7 +8,7 @@ li.sr
           div ES Score: #{sprintf("%0.2f", doc['_score'])}
       .fs-5
         i.bi.bi-person-circle.me-2.fs-5
-        = highlight(doc['_source']['name'])
+        = highlight(doc['_source']['customer_full_name'])
       .gray.text-secondary.fs-6 = highlight(doc['_source']['title'])
     .result-description style="margin-top: 0;"
       table.table.table-sm
@@ -22,6 +22,6 @@ li.sr
           td.mute Joined #{pluralize rand(10), "years"} ago
           td style="color: #18A8E0;"
             i.bi.bi-envelope-fill
-            - first, last = doc['_source']['name'].downcase.split
+            - first, last = doc['_source']['customer_full_name'].downcase.split
             | #{first[0]}.#{last}@corp-intranet.com
   br

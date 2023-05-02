@@ -105,6 +105,9 @@ if parsed[:create]
                               customer_salutation: {
                                 type: "keyword"
                               },
+                              customer_full_name: {
+                                type: "text"
+                              },
                               customer_first_name: {
                                 type: "keyword"
                               },
@@ -182,6 +185,7 @@ if parsed[:import]
               atm_id: cols[6],
               atm_network: cols[7],
               customer_salutation: cols[8],
+              customer_full_name: "#{cols[9]} #{cols[10]}",
               customer_first_name: cols[9],
               customer_last_name: cols[10],
               customer_soc_sec: cols[17],
