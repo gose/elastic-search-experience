@@ -30,42 +30,48 @@ li.sr
           |  checked balance
       |  #{number_to_currency doc['_source']['amount']}
     .result-description
-      span style="color: #666;"
+      .mb-2.fw-3 style="color: #666;"
         - ts = Date.parse doc['_source']['@timestamp']
         = ts.strftime("%B %-d, %Y at %l:%M %p")
-      table style="margin-top: 5px; width: 100%;"
+        /span.ms-1 () (#{time_ago_in_words ts} ago)
+      hr style="color: #ccc; margin: 3px 0 8px 0;"
+      table.table.table-sm.table-borderless style="margin-bottom: 3px;"
         tr
+          td.mute align="right" Card
           td
-            table.table
-              tr
-                td.mute align="right"
-                  i.bi.bi-credit-card.me-2 style="font-size: 1em;"
-                  | Card
-                th = highlight(doc['_source']['card_type'].titleize)
-              tr
-                td.mute align="right" Location
-                th 
-                  = highlight doc['_source']['atm_cross_streets']
-              tr
-                td.mute align="right" Network
-                th = highlight(doc['_source']['atm_network'])
-              tr
-                td.mute align="right" Serial No
-                th = highlight(doc['_source']['atm_serial_no'].upcase)
+            i.bi.bi-credit-card.me-2 style="font-size: 1em;"
+            = highlight(doc['_source']['card_type'].titleize)
+          td.mute align="right" Card Last Four
           td
-            table.table
-              tr
-                td.mute align="right" Card Last Four
-                th  #{doc['_source']['card_last_four']}
-              tr
-                td.mute align="right" Phone
-                th  #{doc['_source']['customer_phone']}
-              tr
-                td.mute align="right" Address
-                th  #{doc['_source']['customer_address']}
-              tr
-                td.mute align="right" City
-                th  #{doc['_source']['customer_city']}
+            i.bi.bi-lock.me-2 style="font-size: 1em;"
+            = doc['_source']['card_last_four']
+        tr
+          td.mute align="right" Location
+          td
+            i.bi.bi-geo-alt.me-2 style="font-size: 1em;"
+            = highlight doc['_source']['atm_cross_streets']
+          td.mute align="right" Phone
+          td
+            i.bi.bi-telephone.me-2 style="font-size: 1em;"
+            = doc['_source']['customer_phone']
+        tr
+          td.mute align="right" Network
+          td
+            i.bi.bi-diagram-3.me-2 style="font-size: 1em;"
+            = highlight(doc['_source']['atm_network'])
+          td.mute align="right" Address
+          td
+            i.bi.bi-globe-americas.me-2 style="font-size: 1em;"
+            = doc['_source']['customer_address']
+        tr
+          td.mute align="right" Serial No
+          td
+            i.bi.bi-code-slash.me-2 style="font-size: 1em;"
+            = highlight(doc['_source']['atm_serial_no'].upcase)
+          td.mute align="right" City
+          td
+            i.bi.bi-cursor.me-2 style="font-size: 1em;"
+            = doc['_source']['customer_city']
     /.result-url
       span style="font-size: 0.9em; float: right; color: #bbb; position: relative; top: -10px;"
         - if doc['_score']
