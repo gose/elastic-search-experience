@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
 
     def init_site
       if cookies.encrypted[:logo] == 'custom'
-        @logo = 'custom-logo.png'
+        @logo = 'logo.png'
       else
         @logo = 'elastic-logo.png'
       end

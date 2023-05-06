@@ -30,7 +30,6 @@ gem 'elasticsearch-dsl'
 
 group :production do
   gem 'elastic-apm'
-  # gem 'sd_notify'
 end
 
 group :development do

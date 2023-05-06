@@ -17,16 +17,14 @@ window.$ = jquery
 
 var apm = initApm({
   // Set required service name (allowed characters: a-z, A-Z, 0-9, -, _, and space)
-  //serviceName: 'ese',
+  serviceName: 'search',
 
   // Set custom APM Server URL (default: http://localhost:8200)
-  //serverUrl: 'https://foobar.apm.us-east-1.aws.cloud.es.io:443',
+  serverUrl: 'https://apm.corp-intranet.com',
+  //serverUrl: 'https://ese-demo.apm.us-central1.gcp.cloud.es.io',
 
   // Set the service version (required for source map feature)
   //serviceVersion: '',
-
-  // Set the service environment
-  environment: 'production'
 })
 
 var animationLock = false;

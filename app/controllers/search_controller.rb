@@ -184,7 +184,6 @@ class SearchController < ApplicationController
     @repos['all'] = nil
 
     public_repos = [FlightsRepository, EcommerceRepository, LogsRepository, SchemaRepository]
-    #private_repos = [LunchRepository, PeopleRepository, ATMRepository]
     private_repos = [LunchRepository, PeopleRepository, ATMRepository, WikipediaRepository]
 
     index_names = []
