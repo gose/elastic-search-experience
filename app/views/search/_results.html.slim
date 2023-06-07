@@ -117,7 +117,7 @@
           = render 'results-people', doc: doc, i: i
         - elsif doc['_index'] == 'schema'
           = render 'results-schema', doc: doc, i: i
-        - elsif doc['_index'] == 'wikipedia'
+        - elsif doc['_index'] =~ /wikipedia/
           = render 'results-wikipedia', doc: doc, i: i
         - else
           = render "results-template", doc: doc, i: i

@@ -1077,19 +1077,12 @@ nav a + a {
 }
 
 .search-ui-container .result {
-  display: block;
-  padding: 1.5rem 0;
-  border-bottom: 1px solid #E9EDF2;
-  position: relative;
-  overflow: hidden;
-}
-
-.search-ui-container .result:first-child {
-  padding-top: 0;
-}
-
-.search-ui-container .result:last-child {
-  border-bottom: 0;
+  color: #555;
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: white;
+  margin-bottom: 20px;
 }
 
 .search-ui-container .result .result-title {

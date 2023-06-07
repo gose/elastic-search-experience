@@ -14,4 +14,6 @@
 ActiveSupport::Inflector.inflections(:en) do |inflect|
   #inflect.acronym "RESTful"
   inflect.acronym "ATM"
+  inflect.acronym "BM25"
+  inflect.acronym "ELSER"
 end

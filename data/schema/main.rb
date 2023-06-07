@@ -6,7 +6,7 @@ require "slop"
 require "openssl"
 require "csv"
 
-require "/Users/gose/rails/elastic-sample/config/environment"
+require "/Users/gose/rails/elastic/config/environment"
 
 #
 # API

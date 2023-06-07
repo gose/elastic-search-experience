@@ -10,7 +10,8 @@ class SearchController < ApplicationController
   include LunchSearch
   include PeopleSearch
   include SchemaSearch
-  include WikipediaSearch
+  include WikipediaBM25Search
+  include WikipediaELSERSearch
 
   def index
     calculate_count
@@ -184,20 +185,21 @@ class SearchController < ApplicationController
     @repos['all'] = nil
 
     public_repos = [FlightsRepository, EcommerceRepository, LogsRepository, SchemaRepository]
-    private_repos = [LunchRepository, PeopleRepository, ATMRepository, WikipediaRepository]
+    private_repos = [LunchRepository, PeopleRepository, ATMRepository,
+                     WikipediaBM25Repository, WikipediaELSERRepository]
 
     index_names = []
 
     # All users get access to the public repositories.
-    public_repos.each do |public_repo|
+    public_repos.each do |repo|
       begin
-        idx = public_repo.new
+        idx = repo.new
         if idx.count
           @repos[idx.name] = idx
           index_names << idx.index_name
         end
       rescue StandardError => e
-        puts e
+        logger.warn "Repo not found: #{repo}"
       end
     end
 
@@ -210,6 +212,7 @@ class SearchController < ApplicationController
           @repos[idx.name] = idx if idx.count
           index_names << idx.index_name
         rescue
+          logger.warn "Repo not found: #{repo}"
         end
       end
     end
@@ -218,7 +221,7 @@ class SearchController < ApplicationController
   end
 
   def user_authorized?(index)
-    current_user || index == 'logs' || index == 'flights' || index == 'ecommerce' || index == 'schema'
+    current_user || index == 'logs' || index == 'flights' || index == 'ecommerce' # || index == 'schema'
   end
 
   def calculate_count

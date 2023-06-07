@@ -1,8 +1,18 @@
 li.sr
-  .result style="padding: 10px; border-radius: 6px; background-color: white; border: 1px solid #ccc; color: #555;"
+  .result
     .result-title
-      .ond style="float: right; font-weight: normal; font-size: 1.2em;"
-        span style="float: right; color: white; font-size: 0.8em;"
+      .d-flex.justify-content-between
+        div
+          | #{highlight(doc['_source']['customer_first_name'])} #{highlight(doc['_source']['customer_last_name'])}
+          span style="font-weight: normal;"
+            - if doc['_source']['operation'] == 'CASH'
+              |  withdrew
+            - elsif doc['_source']['operation'] == 'DEP'
+              |  deposited
+            - else
+              |  checked balance
+          |  #{number_to_currency doc['_source']['amount']}
+        .fw-normal.fs-6
           - if doc['_source']['customer_plan'] == "Diamond"
             .badge.ms-1 style="background-color: #000;"
               | Diamond
@@ -12,30 +22,12 @@ li.sr
           - else
             .badge.ms-1 style="background-color: #aaa;"
               | Silver
-        /- if doc['_source']['card_type'] == "visa"
-          i.bi.bi-credit-card style="font-size: 1em; margin: 0 0 0 8px;"
-        /- elsif doc['_source']['card_type'] == "discover"
-          i.bi.bi-credit-card-2-back-fill style="font-size: 1em; margin: 0 0 0 8px;"
-        /- elsif doc['_source']['card_type'] == "mastercard"
-          i.bi.bi-credit-card-2-front style="font-size: 1em; margin: 0 0 0 8px;"
-        /- else
-          i.bi.bi-credit-card-fill style="font-size: 1em; margin: 0 0 0 8px;"
-      | #{highlight(doc['_source']['customer_first_name'])} #{highlight(doc['_source']['customer_last_name'])}
-      span style="font-weight: normal;"
-        - if doc['_source']['operation'] == 'CASH'
-          |  withdrew
-        - elsif doc['_source']['operation'] == 'DEP'
-          |  deposited
-        - else
-          |  checked balance
-      |  #{number_to_currency doc['_source']['amount']}
-    .result-description
+    .result-description.table-responsive
       .mb-2.fw-3 style="color: #666;"
         - ts = Date.parse doc['_source']['@timestamp']
         = ts.strftime("%B %-d, %Y at %l:%M %p")
-        /span.ms-1 () (#{time_ago_in_words ts} ago)
       hr style="color: #ccc; margin: 3px 0 8px 0;"
-      table.table.table-sm.table-borderless style="margin-bottom: 3px;"
+      table.table.table-sm.table-borderless style="margin-bottom: 3px; min-width: 600px;"
         tr
           td.mute align="right" Card
           td
@@ -76,4 +68,3 @@ li.sr
       span style="font-size: 0.9em; float: right; color: #bbb; position: relative; top: -10px;"
         - if doc['_score']
           div ES Score: #{sprintf("%0.2f", doc['_score'])}
-  br
