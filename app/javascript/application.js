@@ -334,6 +334,13 @@ function runSearch(href) {
         success: function (data) {},
         error: function (data) {},
       });
+      $.get({
+        url: url.replace("/search/", "/answers/"),
+        type: "GET",
+        data: {},
+        success: function (data) {},
+        error: function (data) {},
+      });
       addKeyboardControls();
     },
     error: function (data) {

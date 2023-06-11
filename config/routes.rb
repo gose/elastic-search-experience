@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get '/search/(:index)' => 'search#show', :as => 'search'
   get '/facets/(:index)' => 'search#facets', :as => 'facets'
   get '/counts/(:index)' => 'search#counts', :as => 'counts'
+  get '/answers/(:index)' => 'search#answers', :as => 'answers'
   post '/preferences' => 'pages#preferences', :as => 'preferences'
 
   get '/healthcheck' => 'application#healthcheck'

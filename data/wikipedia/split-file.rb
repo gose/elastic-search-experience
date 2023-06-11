@@ -1,47 +1,35 @@
 #!/usr/bin/env ruby
 
 require 'json'
+require 'zlib'
 
-idx = -1
+idx = 0
+found = false
 
-data_file = "/Users/gose/data/wikipedia/enwiki-20230410-cirrussearch-content.json.gz"
+# Splitting this way due to size of main file
+# and slicing it so we don't need to load it all into memory.
+# ./split-file 1 &
+# ./split-file 2 &
+# ./split-file 3 &
+# ...
+# ./split-file 14 &
+# Then gzip them all
+
+data_file = "/home/ubuntu/data/wikipedia/enwiki-20230410-cirrussearch-content.json.gz"
+out_file = "/home/ubuntu/data/wikipedia/enwiki-20230410-cirrussearch-content-#{ARGV[0]}.json"
 
 Zlib::GzipReader.open(data_file) do |file|
-  # File.open(data_file) do |file|
-    file
-      .lazy
-      .each_slice(100) do |lines|
-        # print '.'
-        batch_for_bulk = []
-        id = nil
-        lines.each do |line|
-          idx += 1
-          next if args[:million] == 0 && idx > 1_000_000
-          next if args[:million] == 1 && (idx <= 1_000_000 || idx > 2_000_000)
-          next if args[:million] == 2 && (idx <= 2_000_000 || idx > 3_000_000)
-          next if args[:million] == 3 && (idx <= 3_000_000 || idx > 4_000_000)
-          next if args[:million] == 4 && (idx <= 4_000_000 || idx > 5_000_000)
-          next if args[:million] == 5 && (idx <= 5_000_000 || idx > 6_000_000)
-          next if args[:million] == 6 && (idx <= 6_000_000 || idx > 7_000_000)
-          next if args[:million] == 7 && (idx <= 7_000_000 || idx > 8_000_000)
-          next if args[:million] == 8 && (idx <= 8_000_000 || idx > 9_000_000)
-          next if args[:million] == 9 && (idx <= 9_000_000 || idx > 10_000_000)
-          next if args[:million] == 10 && (idx <= 10_000_000 || idx > 11_000_000)
-          next if args[:million] == 11 && (idx <= 11_000_000 || idx > 12_000_000)
-          next if args[:million] == 12 && (idx <= 12_000_000 || idx > 13_000_000)
-
-=begin
-File.foreach("/Users/gose/data/wikipedia/enwiki-20230410-cirrussearch-content.json") do |line|
-# File.foreach("head-1000.json") do |line|
-  next if line =~ /^{"index":{"_type":"_doc"/
-  i += 1
-  parsed = JSON.parse(line)
-  if parsed["title"] =~ /Chevy Chase/
-    puts '---'
-    puts i
-    puts parsed["title"]
-    puts parsed["opening_text"]
-    exit
-  end
+  file
+    .lazy
+    .each_slice(100) do |lines|
+      lines.each do |line|
+        if idx >= "#{ARGV[0].to_i - 1}_000_000".to_i && idx < "#{ARGV[0]}_000_000".to_i
+          File.write(out_file, line, mode: 'a')
+          found = true
+        else
+          exit if found
+        end
+        idx += 1
+      end
+    end
 end
-=end

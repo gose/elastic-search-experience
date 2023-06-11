@@ -14,6 +14,8 @@ require "/Users/gose/rails/elastic/config/environment"
 # https://rubydoc.info/gems/elasticsearch-api/Elasticsearch/API/Indices/Actions
 #
 
+$stdout.sync = true
+
 opts = Slop::Options.new
 opts.bool "-c", "--create", "Create the index"
 opts.bool "-d", "--delete", "Delete the index"
@@ -24,7 +26,7 @@ opts.bool "-f", "--full", "Full load (default: 5 docs)"
 opts.int "-t", "--section", "Section", default: 1
 
 begin
-  parsed = opts.parse ARGV
+  args = opts.parse ARGV
 rescue Slop::UnknownOption => e
   puts "\nError: #{e.to_s}\n\n"
   puts opts
@@ -36,26 +38,28 @@ if ARGV.length < 1
   exit
 end
 
-index = "wikipedia-elser"
+index = "wikipedia-elser-segments"
 
 client = nil
 
-if parsed[:full]
+if args[:full] && args[:section]
   data_file =
-    "/Users/gose/data/wikipedia/enwiki-20230410-cirrussearch-content.json.gz"
+    "/Users/gose/data/wikipedia/enwiki-20230410-cirrussearch-content-#{args[:section]}.json.gz"
 else
-  data_file = "/Users/gose/data/wikipedia/head-50000.json"
   #data_file = "/Users/gose/data/wikipedia/head-1000.json"
+  data_file = "/Users/gose/data/wikipedia/chevy.json.gz"
 end
+puts "Reading:\n#{data_file}"
 
-if parsed[:prod]
+if args[:prod]
   client =
     Elasticsearch::Client.new(
       user: Rails.application.credentials.dig(:elastic_cloud, :user),
       password: Rails.application.credentials.dig(:elastic_cloud, :password),
       scheme: Rails.application.credentials.dig(:elastic_cloud, :scheme),
       host: Rails.application.credentials.dig(:elastic_cloud, :host),
-      port: Rails.application.credentials.dig(:elastic_cloud, :port)
+      port: Rails.application.credentials.dig(:elastic_cloud, :port),
+      request_timeout: 5 * 60 # 5 min instead of default 60 seconds
     )
 else
   client =
@@ -70,11 +74,12 @@ else
       password: Rails.application.credentials.dig(:elastic_local, :password),
       scheme: Rails.application.credentials.dig(:elastic_local, :scheme),
       host: Rails.application.credentials.dig(:elastic_local, :host),
-      port: Rails.application.credentials.dig(:elastic_local, :port)
+      port: Rails.application.credentials.dig(:elastic_local, :port),
+      request_timeout: 5 * 60 # 5 min instead of default 60 seconds
     )
 end
 
-if parsed[:create]
+if args[:create]
   client.ingest.put_pipeline id: "elser-v1-wikipedia",
                              body: {
                                description: "Create embeddings",
@@ -100,54 +105,22 @@ if parsed[:create]
                           settings: {
                             number_of_shards: 2,
                             number_of_replicas: 0,
-                            refresh_interval: "60s"
+                            refresh_interval: "300s"
                           },
                           mappings: {
                             dynamic: "false",
                             properties: {
                               title: {
-                                type: "text",
-                                fields: {
-                                  keyword: {
-                                    type: "keyword"
-                                  },
-                                  typeahead: {
-                                    type: "search_as_you_type"
-                                  }
-                                }
+                                type: "text"
                               },
                               "@timestamp": {
                                 type: "date"
-                              },
-                              create_timestamp: {
-                                type: "date"
-                              },
-                              incoming_links: {
-                                type: "keyword"
-                              },
-                              category: {
-                                type: "keyword"
                               },
                               text_field: {
                                 type: "text"
                               },
                               "ml.tokens": {
                                 type: "rank_features"
-                              },
-                              text_bytes: {
-                                type: "integer"
-                              },
-                              content_model: {
-                                type: "keyword"
-                              },
-                              coordinates: {
-                                type: "geo_point"
-                              },
-                              heading: {
-                                type: "keyword"
-                              },
-                              opening_text: {
-                                type: "text"
                               },
                               popularity_score: {
                                 type: "float"
@@ -157,67 +130,71 @@ if parsed[:create]
                         }
 end
 
-if parsed[:import]
+if args[:import]
   puts "Importing ..."
 
-  # File.open(data_file) do |file|
+  found_chevy = false
+
   Zlib::GzipReader.open(data_file) do |file|
+  # File.open(data_file) do |file|
     file
       .lazy
       .each_slice(100) do |lines|
-        puts '.'
-        batch_for_bulk = []
-        id = nil
-        for line in lines
-          if line =~ /^{"index":{"_type":"_doc"/
-            parsed = JSON.parse(line)
-            id = parsed["index"]["_id"]
-            next
-          end
+        lines.each do |line|
+          next if line =~ /^{"index":{"_type":"_doc"/
           parsed = JSON.parse(line)
-          coordinates = nil
-          if parsed["coordinates"] && parsed["coordinates"].length > 0
-            coordinates = parsed["coordinates"][0]["coord"]
-            # "coord":{"lon":-103.6211,"lat":48.1429}
+          batch_for_bulk = []
+          # Break up body into segments
+          sentences = parsed['text'].split('.')
+          sentences.map do |line|
+            line.strip!
+            line += ". "
           end
-          batch_for_bulk.push({ index: { _index: index, _id: id } })
-          batch_for_bulk.push(
-            {
-              title: parsed["title"],
-              "@timestamp": parsed["timestamp"],
-              create_timestamp: parsed["create_timestamp"],
-              incoming_links: parsed["incoming_links"],
-              category: parsed["category"],
-              #text_field: parsed["text"],
-              text_field: parsed["opening_text"],
-              text_bytes: parsed["text_bytes"],
-              content_model: parsed["content_model"],
-              coordinates: coordinates,
-              heading: parsed["heading"],
-              opening_text: parsed["opening_text"],
-              popularity_score: parsed["popularity_score"]
-            }
-          )
+          segment = ''
+          for line in sentences
+            if line.split.count + segment.split.count < 400
+              segment += " #{line}"
+            else
+              if parsed["title"] == 'Chevy Chase'
+                found = true
+              end
+              batch_for_bulk.push({ index: { _index: index } })
+              batch_for_bulk.push(
+                {
+                  title: parsed["title"],
+                  "@timestamp": parsed["timestamp"],
+                  text_field: segment,
+                  popularity_score: parsed["popularity_score"]
+                }
+              )
+              segment = ''
+            end
+          end
+          if batch_for_bulk.count > 0
+            if batch_for_bulk.count > 200
+              puts "title: #{parsed['title']} - #{batch_for_bulk.count} segments"
+            end
+            results =
+              client.bulk(
+                index: index,
+                body: batch_for_bulk,
+                pipeline: "elser-v1-wikipedia"
+              )
+            # puts JSON.pretty_generate(results)
+            exit if found
+          end
         end
-        results =
-          client.bulk(
-            index: index,
-            body: batch_for_bulk,
-            pipeline: "elser-v1-wikipedia"
-          )
-        # puts JSON.pretty_generate(results)
-        id = nil
       end
   end
 end
 
-if parsed[:delete]
+if args[:delete]
   puts "Deleting ..."
   client.indices.delete index: index
   client.ingest.delete_pipeline id: "elser-v1-wikipedia"
 end
 
-if parsed[:status]
+if args[:status]
   print "\nGetting cluster status ... "
   start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
   health = client.cluster.health

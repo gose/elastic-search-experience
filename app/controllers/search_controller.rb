@@ -12,6 +12,8 @@ class SearchController < ApplicationController
   include SchemaSearch
   include WikipediaBM25Search
   include WikipediaELSERSearch
+  include WikipediaELSERSegmentsSearch
+  include WikipediaAnswersSearch
 
   def index
     calculate_count
@@ -178,6 +180,27 @@ class SearchController < ApplicationController
     end
   end
 
+  def answers
+    return if params[:q] !~ /\?$/
+    results = wikipedia_elser_segments_search(
+      @segments_repo, params[:q])
+    if results.count > 0
+      resp = wikipedia_answers_search(
+          @repos['all'],
+          params[:q],
+          results[0]['_source']['text_field'].gsub(/\"/, '').gsub(/\'/, ''))
+      if resp['prediction_probability'] > 0.8
+        @answers = resp['predicted_value']
+      end
+    else
+      # @answers = "We don't know"
+    end
+    respond_to do |format|
+      format.js {}
+      format.html {}
+    end
+  end
+
   private
 
   def init_repos
@@ -206,6 +229,7 @@ class SearchController < ApplicationController
     # Only authenticated users get access to the private repositories.
     # Further ACL behavior would be handled with query filters.
     if current_user
+      @segments_repo = WikipediaELSERSegmentsRepository.new
       private_repos.each do |repo|
         begin
           idx = repo.new

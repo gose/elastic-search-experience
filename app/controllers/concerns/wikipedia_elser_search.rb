@@ -1,97 +1,83 @@
+require 'elasticsearch/dsl'
+
+module Elasticsearch
+  module DSL
+    module Search
+      module Queries
+        class TextExpansion
+          include BaseComponent
+          option_method :model_id
+          option_method :model_text
+        end
+      end
+    end
+  end
+end
+
 module WikipediaELSERSearch
+
   extend ActiveSupport::Concern
+  include Elasticsearch::DSL
 
   # type = quick, search, facet
   def wikipedia_elser_search(repo, type, query, filters, page, sort)
+
     filter_lookup = {}
-    filter_lookup["Incoming Links"] = "incoming_links"
-    filter_lookup["Heading"] = "heading"
+    filter_lookup['Incoming Links'] = 'incoming_links'
+    filter_lookup['Heading'] = 'heading'
 
-    if type == "search"
-      definition = <<QUERY
-{
-  "query": {
-    "bool": {
-      "must": [
-        {
-          "text_expansion": {
-            "ml.tokens": {
-              "model_id": ".elser_model_1",
-              "model_text": "#{query}"
-            }
-          }
+    Elasticsearch::DSL::Search::Aggregations::Terms.option_method :collect_mode
+
+    # Build the Query DSL
+    definition = search do
+      if type == 'facet'
+        size 0
+        aggregation :incoming_links do
+          terms do
+            field        filter_lookup['Incoming Links']
+            collect_mode 'breadth_first'
+            size          5
+          end
+        end
+        aggregation :heading do
+          terms do
+            field        filter_lookup['Heading']
+            collect_mode 'breadth_first'
+            size          5
+          end
+        end
+      end
+      query do
+        bool do
+          if type != 'quick' && filters.present?
+            filter_pairs = filters.split(/--/)
+            for filter_pair in filter_pairs
+              key, value = filter_pair.split(/:/)
+              filter do
+                term "#{filter_lookup[key]}": "#{value}"
+              end
+            end
+          end
+          must do
+            if query.present?
+              text_expansion('ml.tokens') do
+                model_id '.elser_model_1'
+                model_text query
+              end
+            else
+              match_all
+            end
+          end
+        end
+      end
+      if type == 'search' && query.present?
+        highlight fields: {
+          title: {},
+          opening_text: {},
+          text_field: {}
         }
-      ]
-    }
-  },
-  "highlight": {
-    "fields": {
-      "title": {},
-      "opening_text": {},
-      "text_field": {}
-    }
-  }
-}
-QUERY
-    elsif type == "facet"
-      definition = <<QUERY
-{
-  "query": {
-    "bool": {
-      "must": [
-        {
-          "text_expansion": {
-            "ml.tokens": {
-              "model_id": ".elser_model_1",
-              "model_text": "#{query}"
-            }
-          }
-        }
-      ]
-    }
-  },
-  "aggregations": {
-    "incoming_links": {
-      "terms": {
-        "field": "incoming_links",
-        "collect_mode": "breadth_first",
-        "size": 5
-      }
-    },
-    "heading": {
-      "terms": {
-        "field": "heading",
-        "collect_mode": "breadth_first",
-        "size": 5
-      }
-    }
-  },
-  "size": 0
-}
-QUERY
-    elsif type == "quick"
-      definition = <<QUERY
-{
-  "query": {
-    "bool": {
-      "must": [
-        {
-          "text_expansion": {
-            "ml.tokens": {
-              "model_id": ".elser_model_1",
-              "model_text": "#{query}"
-            }
-          }
-        }
-      ]
-    }
-  }
-}
-QUERY
+      end
     end
-
-    # Convert the JSON string to JSON
-    definition = JSON.parse(definition)
 
     # Run the actual search, and time it.
     starting = Process.clock_gettime(Process::CLOCK_MONOTONIC)
@@ -109,13 +95,13 @@ QUERY
     logger.debug "-------------".yellow
     if took_ms < 1000
       logger.debug "WikipediaELSER ES #{type.titleize} Query: " +
-                     "#{sprintf("%0.0f", took_ms)} ms 🚀".light_green
+        "#{sprintf("%0.0f", took_ms)} ms 🚀".light_green
     else
       logger.debug "Wikipedia ES #{type.titleize} Query: " +
-                     "#{sprintf("%0.1f", took_ms / 1000)} seconds 🐢".light_red
+        "#{sprintf("%0.1f", took_ms / 1000 )} seconds 🐢".light_red
     end
 
-    if type == "facet"
+    if type == 'facet'
       filters = ActiveSupport::OrderedHash.new
 
       # Heading Filter
@@ -135,4 +121,5 @@ QUERY
 
     return results, filters, took_ms
   end
+
 end

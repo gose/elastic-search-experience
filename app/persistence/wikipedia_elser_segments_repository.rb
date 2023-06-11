@@ -1,11 +1,11 @@
-class AllRepository
+class WikipediaELSERSegmentsRepository
   include Elasticsearch::Persistence::Repository
   include Elasticsearch::Persistence::Repository::DSL
 
   if Rails.env.development?
     # client Elasticsearch::Client.new url: 'http://localhost:9200'#, log: true
     client Elasticsearch::Client.new(
-             log: false,
+             # log: true,
              transport_options: {
                ssl: {
                  ca_file: Rails.root.join("config/http_ca.crt").to_s
@@ -29,13 +29,13 @@ class AllRepository
            )
   end
 
-  # We define the 'index_name' on instantiation since it varies.
+  index_name "wikipedia-elser-segments"
 
   def deserialize(document)
     document #['_source']
   end
 
   def name
-    'all'
+    'wikipedia_elser_segments'
   end
 end
