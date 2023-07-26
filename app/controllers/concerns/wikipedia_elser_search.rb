@@ -74,7 +74,6 @@ module WikipediaELSERSearch
         highlight fields: {
           title: {},
           opening_text: {},
-          text_field: {}
         }
       end
     end
