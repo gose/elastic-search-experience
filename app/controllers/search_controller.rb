@@ -189,8 +189,8 @@ class SearchController < ApplicationController
       resp = wikipedia_answers_search(
           @repos['all'],
           params[:q],
-          results[0]['_source']['text_field'].gsub(/\"/, '').gsub(/\'/, '')[0..1700])
-      if resp['prediction_probability'] > 0.8
+          results[0]['_source']['text_field'].gsub(/\"/, '').gsub(/\'/, '')[0..1600])
+      if resp['prediction_probability'] > 0.5
         @answers = resp['predicted_value']
       end
     else
