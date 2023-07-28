@@ -185,10 +185,11 @@ class SearchController < ApplicationController
     results = wikipedia_elser_segments_search(
       @segments_repo, params[:q])
     if results.count > 0
+      # TODO: Temporary fix to Limit characters so we stay under token limit
       resp = wikipedia_answers_search(
           @repos['all'],
           params[:q],
-          results[0]['_source']['text_field'].gsub(/\"/, '').gsub(/\'/, ''))
+          results[0]['_source']['text_field'].gsub(/\"/, '').gsub(/\'/, '')[0..1700])
       if resp['prediction_probability'] > 0.8
         @answers = resp['predicted_value']
       end
